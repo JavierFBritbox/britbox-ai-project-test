@@ -5,7 +5,8 @@
   "confluence": {
     "spaceKey": "TBD",
     "spaceId": "TBD",
-    "productPageId": "TBD"
+    "productPageId": "TBD",
+    "architecturePageId": "TBD"
   },
   "jira": {
     "projectKey": "TBD",

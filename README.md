@@ -23,9 +23,11 @@ Confluence "Product" folder            (humans write requirements)
         │      • HUMAN GATE: mark doc "Signed Off"
         ▼
    docs/features/<slug>/requirement.md
-        │  ②  ARCHITECT role
-        │      • decides if architecture is needed; designs the AWS solution
-        │      • HUMAN GATE: architect agreement
+        │  ②  ARCHITECT role   (works directly in the repo, interactive)
+        │      • checks if existing architecture already covers the requirement
+        │      • proposes needs (infra/tech/components); interviews the architect
+        │      • HUMAN GATE: architect signs off
+        │      • publishes agreed design to Confluence, linked to the requirement
         ▼
    docs/features/<slug>/architecture.md
         │  ③  DEVOPS role      (planned)

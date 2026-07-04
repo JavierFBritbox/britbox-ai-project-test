@@ -7,7 +7,10 @@ Confluence "Product" folder (humans author requirements)
       │  PRODUCT role  ── template · review/comments · iterate · sign-off gate
       ▼
 docs/features/<slug>/requirement.md
-      │  ARCHITECT role ── needs-architecture? · AWS design · agreement gate
+      │  ARCHITECT role (repo-local, interactive)
+      │   ── coverage check (does existing arch already cover it?)
+      │   ── propose needs · interview architect · AWS design
+      │   ── HUMAN GATE: sign-off → publish to Confluence, linked to requirement
       ▼
 docs/features/<slug>/architecture.md
       │  DEVOPS role ── Terraform + GitHub Actions · envs/rules/account gate
