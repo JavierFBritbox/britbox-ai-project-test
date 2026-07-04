@@ -13,6 +13,10 @@ description: >-
 
 Initialises the integration layer for this AI development environment. This is **step 1**.
 
+**Scope:** this skill provides the **Atlassian (Confluence + Jira)** setup only. Every other tool
+(Qase, `gh`, AWS, Terraform, language runtimes) is **not** handled here — those are checked and
+prompted just-in-time by the role that needs them, via the `preflight-check` skill.
+
 ## Prerequisites (human, one-time)
 
 The available Atlassian tools can create pages and issues but **cannot create a Confluence space

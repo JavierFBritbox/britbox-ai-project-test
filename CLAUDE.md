@@ -39,6 +39,10 @@ Full detail: `docs/process/README.md`. Roles: `docs/roles/README.md`.
    roles gate the merge.
 6. **Coding standards.** All code changes meet `docs/standards/coding-standards.md` (clean, secure,
    efficient, unit-tested; Definition of Done). The Developer writes to it; Reviewer/QA verify it.
+7. **Preflight tool checks.** Before using any external tool/credential (`gh`, AWS, Terraform, Qase,
+   language runtimes…), run the `preflight-check` skill. If something is missing, **stop and prompt
+   the user** with the exact install/configure step — never guess or fail silently. Atlassian
+   (Confluence + Jira) is provided once by `project-init`; all other tools are prompted just-in-time.
 
 ## Layout
 

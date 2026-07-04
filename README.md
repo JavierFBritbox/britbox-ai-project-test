@@ -75,6 +75,27 @@ Confluence "Product" folder            (humans write requirements)
   overwritten across features.
 - **Human-in-the-loop** — the pipeline only advances at explicit human approvals.
 
+## Toolkit — what you need installed & configured
+
+This environment orchestrates real tools. Install/configure the ones for the roles you'll run;
+each role also **checks its own tools at runtime** (`preflight-check` skill) and will prompt you for
+anything missing rather than failing. **Atlassian is set up once via `project-init`; everything else
+is prompted just-in-time.**
+
+| Tool / access | Needed for | Install / configure |
+|---|---|---|
+| **Claude Code** + **Atlassian Rovo MCP** connected | all roles; Confluence/Jira access | Claude Code with the Atlassian (Rovo) MCP connected to `britbox.atlassian.net` |
+| **git** | everything | preinstalled on macOS / your package manager |
+| **GitHub CLI `gh`** (authenticated) | Developer, Code Reviewer, Release Manager | `brew install gh` → `gh auth login` |
+| **AWS CLI** (credentials) | DevOps (and Architect research) | `brew install awscli` → `aws configure` / SSO |
+| **Terraform** | DevOps | `brew install terraform` |
+| **Language runtimes** (Node, Python, …) | Developer (per app module) | install the runtime + package manager each `apps/<module>` uses |
+| **Atlassian project + space** | Product/Architect/DevOps/Tech Lead + gate | created once by a human (Step 0), recorded by `project-init` |
+| **Qase** account + API token | QA | create a Qase project; `export QASE_API_TOKEN=…`; set `projectCode` in `config/qase.json` |
+
+Config files that wire it together: `config/atlassian.json` (Confluence + Jira) and
+`config/qase.json` (Qase). Secrets (tokens/keys) live in env vars, **never** in the repo.
+
 ## Getting started
 
 ### Step 0 — One-time Atlassian setup (human, admin)
