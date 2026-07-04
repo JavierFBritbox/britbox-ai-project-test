@@ -48,6 +48,22 @@ New feature → re-enters the pipeline; each role computes a DELTA against exist
 Versioning & branching: see docs/process/versioning.md.
 ```
 
+## Post-release loop (Maintenance / Debugger)
+
+Once a version is released, the **Maintenance/Debugger** role is the front door for what comes next.
+It does not run a separate pipeline — it triages and re-enters the existing one:
+
+```
+Bug report / incident / change request
+   │  MAINTENANCE ── intake (template) · reproduce & root-cause defects · classify · severity
+   ▼
+route to the correct entry point:
+   • Defect            → Developer (fix) → Code Reviewer → Release Manager (patch vX.Y.Z) → QA re-test
+   • Small enhancement → Tech Lead (new Story/Sub-task) → Developer → …
+   • New capability    → Product (new requirement) → full pipeline (Architect/DevOps deltas → …)
+```
+
+
 ## Cross-cutting rules
 
 - **Config-driven integrations.** All Atlassian identifiers come from `config/atlassian.json`.

@@ -152,5 +152,7 @@ template from `docs/templates/requirement-template.md`. See `config/README.md` f
 - ✅ **Code Reviewer** role (`code-reviewer-review`): per-Sub-task PR gate → approve + squash-merge
 - ✅ **Release Manager** role (`release-cut-rc`, `release-promote`): SemVer tags, changelog, RC/promote
 - ✅ **QA** role (`qa-test-run`) using **Qase** (`config/qase.json`): test the RC, file bugs, sign off
+- ✅ **Maintenance/Debugger** role (`maintenance-triage`, `maintenance-debug`) + intake template:
+  post-release front door — reproduce, root-cause, classify, route back into the pipeline
 - ⏳ Atlassian space/project + Qase project (awaiting setup) — everything runs config-guarded until then
-- 🔜 Maintenance / Debugger and Docs roles
+- 🔜 Docs / Technical Writer role
