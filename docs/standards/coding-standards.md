@@ -46,6 +46,8 @@ module's own `CLAUDE.md`) refine — never lower — this bar.
 ### Test-Driven Development (required method)
 
 Write the test **first**, watch it fail, then write minimal code to pass. RED → GREEN → REFACTOR.
+(This is the Superpowers `test-driven-development` discipline, which the required plugin provides —
+invoke it for the full method.)
 
 ```
 NO PRODUCTION CODE WITHOUT A FAILING TEST FIRST

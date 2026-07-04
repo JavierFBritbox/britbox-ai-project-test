@@ -10,7 +10,8 @@ description: >-
 # maintenance-debug
 
 Deep diagnosis for a defect. Produces the evidence and root cause the Developer needs — it does
-**not** fix the code.
+**not** fix the code. Applies the Superpowers `systematic-debugging` technique to the maintenance
+flow (invoke that skill for the general method).
 
 ## The Iron Law
 

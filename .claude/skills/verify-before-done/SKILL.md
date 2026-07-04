@@ -10,7 +10,8 @@ description: >-
 # verify-before-done
 
 The single "evidence before claims" gate used across the pipeline (Developer, Code Reviewer, DevOps,
-QA, Release Manager, Maintenance).
+QA, Release Manager, Maintenance). This is the project-local adoption of the Superpowers
+`verification-before-completion` skill (required plugin) — invoke that for the general discipline.
 
 ## The Iron Law
 

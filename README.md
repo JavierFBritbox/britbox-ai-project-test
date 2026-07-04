@@ -89,6 +89,7 @@ is prompted just-in-time.**
 | Tool / access | Needed for | Install / configure |
 |---|---|---|
 | **Claude Code** + **Atlassian Rovo MCP** connected | all roles; Confluence/Jira access | Claude Code with the Atlassian (Rovo) MCP connected to `britbox.atlassian.net` |
+| **Superpowers plugin** (**required**) | all roles — systematic-debugging, TDD, verification, writing-skills, subagent-driven-development, planning | `/plugin install superpowers@claude-plugins-official` (or via the `/plugin` menu). This environment **requires** it. |
 | **git** | everything | preinstalled on macOS / your package manager |
 | **GitHub CLI `gh`** (authenticated) | Developer, Code Reviewer, Release Manager | `brew install gh` → `gh auth login` |
 | **AWS CLI** (credentials) | DevOps (and Architect research) | `brew install awscli` → `aws configure` / SSO |
@@ -99,6 +100,11 @@ is prompted just-in-time.**
 
 Config files that wire it together: `config/atlassian.json` (Confluence + Jira) and
 `config/qase.json` (Qase). Secrets (tokens/keys) live in env vars, **never** in the repo.
+
+> **Superpowers is a hard prerequisite.** The roles build on its disciplines (systematic-debugging,
+> test-driven-development, verification-before-completion, writing-skills, subagent-driven-development,
+> brainstorming, writing/executing-plans) and may invoke those skills directly. `preflight-check`
+> verifies it is installed and stops with the install command if not.
 
 ## Getting started
 

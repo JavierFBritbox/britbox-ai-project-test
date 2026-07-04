@@ -64,6 +64,16 @@ Full detail: `docs/process/README.md`. Roles: `docs/roles/README.md`.
 - `docs/features/` — per-feature artifacts + `INDEX.md` registry.
 - `apps/`, `packages/` — the solution code.  `infra/`, `.github/workflows/` — deployment.
 
+## Superpowers (required)
+
+This environment **requires the Superpowers plugin** (`superpowers@claude-plugins-official`).
+`preflight-check` verifies it and stops with the install command if missing. Roles build on and may
+directly invoke its skills — notably `systematic-debugging`, `test-driven-development`,
+`verification-before-completion`, `writing-skills`, `subagent-driven-development`, `brainstorming`,
+and `writing-plans`/`executing-plans`. Our in-repo skills (`maintenance-debug`, `verify-before-done`,
+`coding-standards`) encode the project-specific flow that builds on these; prefer the Superpowers
+skill for the general technique and our skill for how it plugs into the pipeline.
+
 ## Atlassian
 
 Cloud: `britbox.atlassian.net` (cloudId in `config/atlassian.json`), via the Atlassian Rovo MCP.
