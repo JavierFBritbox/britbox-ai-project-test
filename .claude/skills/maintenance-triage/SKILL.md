@@ -19,6 +19,10 @@ it re-enters the pipeline.
    Prompt for anything missing.
 2. **Intake** — capture the report in `docs/templates/maintenance-intake-template.md`: source,
    affected version/env, description, expected vs actual, any repro steps, initial severity.
+   **Sources include human-created Jira tickets** — a human may add a **Bug**, small **Task**, or
+   improvement directly in Jira. Scan the project (`searchJiraIssuesUsingJql`) for unassigned/new
+   human-created tickets not yet routed, and triage them the same way. Preserve the human's ticket
+   (link/route it) rather than duplicating it.
 3. **For suspected defects → `maintenance-debug`** to reproduce and root-cause before routing.
 4. **Classify:**
    - **Defect** — released behavior is wrong.

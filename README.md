@@ -59,8 +59,12 @@ Confluence "Product" folder            (humans write requirements)
         │  ⑦  RELEASE MANAGER  • on QA pass, promote to vX.Y.0 → deploy to prod
         ▼
    released version
+        │  ⑨  DOCS             • document the released feature → publish to Confluence
+        ▼
+   released + documented
 
    A NEW FEATURE re-enters the pipeline; each role computes a DELTA vs existing artifacts.
+   Post-release: Maintenance/Debugger triages bugs & human-added Jira tickets back into the pipeline.
    Versioning & branching: docs/process/versioning.md
 ```
 

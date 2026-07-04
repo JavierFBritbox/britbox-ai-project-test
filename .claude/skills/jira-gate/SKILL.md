@@ -19,8 +19,9 @@ Before an AI role performs any state-changing action it MUST:
 1. **Ensure a ticket exists.** Reuse a linked ticket if the work already has one; otherwise
    create it with `createJiraIssue` using the project key and issue-type IDs from
    `config/atlassian.json`.
-   - Feature-level work → **Epic**; requirement/story work → **Story**; technical work
-     (architecture, Terraform, Actions) → **Task**; defects → **Bug**.
+   - Feature-level work → **Epic** (created at the Product stage so all downstream tickets link to
+     it); requirement/story work → **Story**; technical work (architecture, Terraform, Actions) →
+     **Task**; defects → **Bug**.
 2. **Move to In Progress** (`transitionJiraIssue` with `transitions.inProgress`) *before* the
    first mutation.
 3. **Do the work.**

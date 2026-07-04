@@ -29,6 +29,9 @@ Turns a QA-approved RC into a released version. Follows `docs/process/versioning
 6. **Verify** the prod deploy workflow (`gh run list`); report status and any environment approval
    still required.
 7. **Transition** — `jira-gate`: move the **Story** → **Done**.
+8. **Update `docs/features/INDEX.md`** — status → `Released`, record the released version and date.
+9. **Hand off to Docs** — notify the **Docs role** (`docs-author` → `docs-publish`) to document the
+   released feature/version.
 
 ## Gate
 

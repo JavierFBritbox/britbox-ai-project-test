@@ -26,7 +26,8 @@ Produces the versioned RC that QA will test. Follows `docs/process/versioning.md
    the **test/staging** environment.
 6. **Verify** the deploy workflow started (`gh run list`); report status.
 7. **Transition** — `jira-gate`: move the **Story** → **Testing**.
-8. **Hand off** — notify **QA** (`qa-test-run`) that `vX.Y.0-rc.N` is deployed and ready to test.
+8. **Update `docs/features/INDEX.md`** — status → `Testing (RC)`, record the version and date.
+9. **Hand off** — notify **QA** (`qa-test-run`) that `vX.Y.0-rc.N` is deployed and ready to test.
 
 ## Gate
 

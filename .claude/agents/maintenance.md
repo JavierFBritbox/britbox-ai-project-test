@@ -24,8 +24,10 @@ tool use, and read `config/atlassian.json`. Prompt for anything missing; don't g
 
 ## Skills
 
-1. **`maintenance-triage`** — intake a report (Jira Bug, Qase defect, user report, monitoring
-   alert) using `docs/templates/maintenance-intake-template.md`; classify and route.
+1. **`maintenance-triage`** — intake a report (**human-created Jira ticket**, Jira Bug, Qase defect,
+   user report, monitoring alert) using `docs/templates/maintenance-intake-template.md`; classify
+   and route. Humans can add Bugs, small Tasks, or improvements directly to Jira — scan for and
+   triage those too, routing (not duplicating) the existing ticket.
 2. **`maintenance-debug`** — reproduce a suspected defect against the released version, isolate root
    cause, and produce a diagnosis for the fix ticket. **Diagnose, don't fix** — the Developer
    implements the fix through the normal gated flow.

@@ -21,7 +21,9 @@ The Developer role's end-to-end implementation loop for a single ticket.
    branch/PR at a time.
 3. **Select one ticket** — the given `<KEY>`, else the highest-priority unblocked **To Do**
    Story/Sub-task under the active feature Epic (dependencies Done), respecting sequencing.
-5. **Claim** — `jira-gate`: move **To Do → In Progress**.
+5. **Claim** — `jira-gate`: move the Sub-task **To Do → In Progress**. If its parent **Story** is
+   still **To Do**, move the Story → **In Progress** too (and set `INDEX.md` status → `In Development`
+   the first time any Sub-task of the feature starts).
 6. **Gather context** — read the ticket, `docs/features/<slug>/tech-design.md`, `architecture.md`,
    `requirement.md`, the target module's `CLAUDE.md`, and `docs/standards/coding-standards.md`.
 7. **Branch** — from fresh `main`: `git switch -c <JIRA-KEY>-<kebab-summary>`.

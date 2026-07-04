@@ -40,7 +40,9 @@ Never mark sign-off on the human's behalf.
      page link back in the `architecture.md` provenance footer and in `INDEX.md`.
    - If Confluence is `unconfigured`/`TBD`, **skip the publish** but keep the committed
      `architecture.md`; flag that the Confluence publish is pending (do it on next run once configured).
-7. Hand off: state that the DevOps role can now derive infrastructure from this architecture.
+7. Hand off: state that **both** the DevOps role (to derive infrastructure) **and** the Tech Lead
+   role (to design code + create tickets) can now proceed from this agreed architecture — they run
+   in parallel.
 
 ## Gate
 

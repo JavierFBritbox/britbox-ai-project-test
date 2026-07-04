@@ -28,8 +28,11 @@ Architect role.
 5. Write `docs/features/<slug>/requirement.md`. Do **not** overwrite a different feature's file;
    if the same slug already has a requirement, treat it as a revision (note the version/date).
 6. Add a provenance footer: Confluence page link, page version, sign-off date, approvers.
-7. Update `docs/features/INDEX.md` (slug → status `Requirement Signed Off`, links, date).
-8. Hand off: state that the Architect role can now assess this requirement.
+7. **Ensure the feature Epic exists** — create a Jira **Epic** for this feature (via `jira-gate`,
+   `issueTypes.epic`) if one doesn't already exist, so all downstream tickets (Architect/DevOps
+   Tasks, Tech Lead Stories/Sub-tasks) link to it. Record the Epic key in `INDEX.md`.
+8. Update `docs/features/INDEX.md` (slug → status `Requirement Signed Off`, Jira Epic, links, date).
+9. Hand off: state that the Architect role can now assess this requirement.
 
 ## Guard & gate
 

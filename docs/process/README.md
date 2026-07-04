@@ -41,8 +41,9 @@ Story complete (all Sub-tasks merged)
       │  RELEASE MANAGER ── cut vX.Y.0-rc.1 → deploy to test env
       │  QA ── test RC vs acceptance criteria → bugs (patch) or pass
       │  RELEASE MANAGER ── on QA pass, promote to vX.Y.0 → deploy to prod
+      │  DOCS ── document the released feature → publish to Confluence Documentation folder
       ▼
-released version
+released + documented version
 
 New feature → re-enters the pipeline; each role computes a DELTA against existing artifacts.
 Versioning & branching: see docs/process/versioning.md.
@@ -53,8 +54,12 @@ Versioning & branching: see docs/process/versioning.md.
 Once a version is released, the **Maintenance/Debugger** role is the front door for what comes next.
 It does not run a separate pipeline — it triages and re-enters the existing one:
 
+Intake sources include **human-created Jira tickets** — a human may add a Bug, small Task, or
+improvement directly in Jira; Maintenance scans for and triages those the same way (routing, not
+duplicating, the existing ticket).
+
 ```
-Bug report / incident / change request
+Human-created Jira ticket / bug report / incident / change request
    │  MAINTENANCE ── intake (template) · reproduce & root-cause defects · classify · severity
    ▼
 route to the correct entry point:
