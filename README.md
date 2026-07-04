@@ -23,7 +23,7 @@ Confluence "Product" folder            (humans write requirements)
         │      • HUMAN GATE: mark doc "Signed Off"
         ▼
    docs/features/<slug>/requirement.md
-        │  ②  ARCHITECT role   (planned)
+        │  ②  ARCHITECT role
         │      • decides if architecture is needed; designs the AWS solution
         │      • HUMAN GATE: architect agreement
         ▼
@@ -91,5 +91,7 @@ template from `docs/templates/requirement-template.md`. See `config/README.md` f
 - ✅ Repo scaffold, conventions, requirement template
 - ✅ **Product** role + skills (`project-init`, `jira-gate`, `product-requirement-template`,
   `product-review`, `product-signoff-to-md`)
+- ✅ **Architect** role + skills (`architect-assess`, `architect-design`,
+  `architect-signoff-to-md`) + architecture template
 - ⏳ Atlassian space/project (awaiting permission) — everything runs config-guarded until then
-- 🔜 **Architect** and **DevOps** roles, then Dev / QA / Reviewer / Release
+- 🔜 **DevOps** role, then Dev / QA / Reviewer / Release
