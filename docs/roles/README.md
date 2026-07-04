@@ -10,11 +10,15 @@ with a human counterpart and only advance the pipeline at explicit gates.
 | **Architect** | `architect` | Decide if architecture is needed; design AWS solution | Human architect agreement | `docs/features/<slug>/architecture.md` |
 | **DevOps** | `devops` | Terraform + GitHub Actions from requirement + architecture (repo-local, interactive) | Human agrees deploy rules/envs/account | `infra/`, `.github/workflows/`, `docs/features/<slug>/devops.md` |
 | **Tech Lead** | `tech-lead` | Translate requirement+architecture into code design; break work into code tickets (repo-local, interactive) | Human tech lead signs off design + breakdown | `docs/features/<slug>/tech-design.md` + Jira Stories/Sub-tasks |
-| **Developer** | `developer` | Consume one code ticket → implement (clean/secure/efficient + unit tests) → open PR (**non-interactive**) | Reviewer/QA gate the PR merge | `apps/<module>/` code + PR per ticket |
+| **Developer** | `developer` | Consume one code ticket → implement (clean/secure/efficient + unit tests) → open PR (**non-interactive**) | Reviewer approves the PR merge | `apps/<module>/` code + PR per ticket |
+| **Code Reviewer** | _(next)_ | Independent review of each Sub-task PR vs coding standards; approve → merge | — (is the gate) | PR approval / change requests |
+| **Release Manager** | _(next)_ | On Story completion, cut RC version, changelog, promote on QA pass, trigger deploy | — (owns versioning) | git tags, `CHANGELOG.md`, `VERSION` |
+| **QA** | _(next)_ | Test the deployed RC vs acceptance criteria; file bug tickets; sign off the version | QA sign-off promotes the release | Bug tickets, QA report |
 
-More roles (QA/Test, Reviewer, Release, Maintenance, Docs, …) will be added here as they are defined.
+More roles (Maintenance/Debugger, Docs, …) will be added here as they are defined.
 
-The Developer (and later Reviewer/QA) hold code to `docs/standards/coding-standards.md`.
+The Developer, Code Reviewer, and QA hold code to `docs/standards/coding-standards.md`.
+Versioning/branching is defined in `docs/process/versioning.md`.
 
 ## Interactivity
 

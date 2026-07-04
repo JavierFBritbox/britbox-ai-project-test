@@ -34,9 +34,18 @@ docs/features/<slug>/tech-design.md + code tickets (To Do)
       │   ── consume one ticket → feature branch → implement → open PR
       │   ── ticket To Do → In Progress → In Review; PR gated by Reviewer/QA (later roles)
       ▼
-apps/<module>/ code via PR per ticket
+apps/<module>/ code via PR per Sub-task
+      │  CODE REVIEWER ── review PR vs coding standards → approve → merge (unblocks next ticket)
+      ▼
+Story complete (all Sub-tasks merged)
+      │  RELEASE MANAGER ── cut vX.Y.0-rc.1 → deploy to test env
+      │  QA ── test RC vs acceptance criteria → bugs (patch) or pass
+      │  RELEASE MANAGER ── on QA pass, promote to vX.Y.0 → deploy to prod
+      ▼
+released version
 
 New feature → re-enters the pipeline; each role computes a DELTA against existing artifacts.
+Versioning & branching: see docs/process/versioning.md.
 ```
 
 ## Cross-cutting rules

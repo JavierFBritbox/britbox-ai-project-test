@@ -46,13 +46,22 @@ Confluence "Product" folder            (humans write requirements)
         │      • publishes design to Confluence, linked to architecture/requirement
         ▼
    docs/features/<slug>/tech-design.md  +  code tickets (To Do)
-        │  ⑤  DEVELOPER role   (NON-interactive)
-        │      • consumes one code ticket → feature branch → implements → opens PR
-        │      • ticket moves To Do → In Progress → In Review; PR gated by Reviewer/QA
+        │  ⑤  DEVELOPER role   (NON-interactive, single dev, serial)
+        │      • one ticket at a time → feature branch → implements → opens PR
+        │      • next ticket only after the previous PR merges (no divergent branches)
         ▼
-   apps/<module>/ code via PR per ticket
+   apps/<module>/ code via PR per Sub-task
+        │  ⑥  CODE REVIEWER    • reviews PR vs coding standards → approve → merge
+        ▼
+   Story complete
+        │  ⑦  RELEASE MANAGER  • cut vX.Y.0-rc.1 → deploy to test env
+        │  ⑧  QA               • test RC vs acceptance criteria → bugs (patch) or pass
+        │  ⑦  RELEASE MANAGER  • on QA pass, promote to vX.Y.0 → deploy to prod
+        ▼
+   released version
 
    A NEW FEATURE re-enters the pipeline; each role computes a DELTA vs existing artifacts.
+   Versioning & branching: docs/process/versioning.md
 ```
 
 ## Rules that keep it safe and consistent
@@ -117,5 +126,8 @@ template from `docs/templates/requirement-template.md`. See `config/README.md` f
   + tech-design template (code structure + Story/Sub-task breakdown → Jira tickets)
 - ✅ **Developer** role (non-interactive) + skill (`developer-implement`) + coding standards
   (`docs/standards/coding-standards.md`): one ticket → feature branch → tested code → PR
+- ✅ **Versioning & branching strategy** (`docs/process/versioning.md`, `VERSION`, `CHANGELOG.md`):
+  trunk-based, SemVer, version per Story via RC-then-promote
 - ⏳ Atlassian space/project (awaiting permission) — everything runs config-guarded until then
-- 🔜 **Code Reviewer** and **QA** (gate the PR), then Release / Maintenance / Docs
+- 🔜 **Code Reviewer** (PR gate), **Release Manager** (versioning/RC), **QA** (test RC),
+  then Maintenance / Docs
