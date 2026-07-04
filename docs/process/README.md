@@ -13,7 +13,10 @@ docs/features/<slug>/requirement.md
       │   ── HUMAN GATE: sign-off → publish to Confluence, linked to requirement
       ▼
 docs/features/<slug>/architecture.md
-      │  DEVOPS role ── Terraform + GitHub Actions · envs/rules/account gate
+      │  DEVOPS role (repo-local, interactive)
+      │   ── coverage check (does existing infra/pipeline cover it?)
+      │   ── Terraform + GitHub Actions · interview: envs/AWS account/deploy rules
+      │   ── HUMAN GATE: sign-off → publish to Confluence, linked to architecture/requirement
       ▼
 infra/ + .github/workflows/   →  infrastructure ready
 

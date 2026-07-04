@@ -41,7 +41,8 @@ Then provide the **space key** and **project key** to this skill.
      `docs/templates/requirement-template.md` (converted to Confluence storage format),
    - an **`Architecture`** landing page/folder (record its id as `confluence.architecturePageId`)
      where the Architect role publishes agreed architectures and links them to their requirement,
-   - optionally a `DevOps` landing page for the later role.
+   - a **`DevOps`** landing page/folder (record its id as `confluence.devopsPageId`) where the
+     DevOps role publishes agreed deployment designs, linked to the architecture/requirement.
 7. **Write back** all discovered IDs to `config/atlassian.json` and set `"status": "configured"`.
 
 ## Guard

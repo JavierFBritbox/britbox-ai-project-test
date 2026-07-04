@@ -8,7 +8,7 @@ with a human counterpart and only advance the pipeline at explicit gates.
 |---|---|---|---|---|
 | **Product** | `product` | Requirement lifecycle in Confluence; review & sign-off | Human marks doc "Signed Off" | `docs/features/<slug>/requirement.md` |
 | **Architect** | `architect` | Decide if architecture is needed; design AWS solution | Human architect agreement | `docs/features/<slug>/architecture.md` |
-| **DevOps** | _(planned)_ | Terraform + GitHub Actions from requirement + architecture | Human agrees deploy rules/envs/account | `infra/`, `.github/workflows/`, `docs/features/<slug>/devops.md` |
+| **DevOps** | `devops` | Terraform + GitHub Actions from requirement + architecture (repo-local, interactive) | Human agrees deploy rules/envs/account | `infra/`, `.github/workflows/`, `docs/features/<slug>/devops.md` |
 
 More roles (Dev, QA/Test, Reviewer, Release, …) will be added here as they are defined.
 

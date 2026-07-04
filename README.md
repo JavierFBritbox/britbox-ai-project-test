@@ -30,9 +30,11 @@ Confluence "Product" folder            (humans write requirements)
         │      • publishes agreed design to Confluence, linked to the requirement
         ▼
    docs/features/<slug>/architecture.md
-        │  ③  DEVOPS role      (planned)
+        │  ③  DEVOPS role      (works directly in the repo, interactive)
+        │      • checks if existing infra/pipeline already covers the need
         │      • Terraform + GitHub Actions from the artifacts above
-        │      • HUMAN GATE: agree envs, deploy rules, AWS account
+        │      • HUMAN GATE: agree envs, deploy rules, AWS account → sign off
+        │      • publishes agreed design to Confluence, linked to architecture/requirement
         ▼
    infra/ + .github/workflows/     →  infrastructure ready
 
@@ -95,5 +97,7 @@ template from `docs/templates/requirement-template.md`. See `config/README.md` f
   `product-review`, `product-signoff-to-md`)
 - ✅ **Architect** role + skills (`architect-assess`, `architect-design`,
   `architect-signoff-to-md`) + architecture template
+- ✅ **DevOps** role + skills (`devops-assess`, `devops-design`, `devops-signoff-to-md`)
+  + devops template (Terraform + GitHub Actions)
 - ⏳ Atlassian space/project (awaiting permission) — everything runs config-guarded until then
-- 🔜 **DevOps** role, then Dev / QA / Reviewer / Release
+- 🔜 Developer, then QA / Reviewer / Release / Maintenance / Docs
