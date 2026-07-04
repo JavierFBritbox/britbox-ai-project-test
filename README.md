@@ -115,5 +115,7 @@ template from `docs/templates/requirement-template.md`. See `config/README.md` f
   + devops template (Terraform + GitHub Actions)
 - ✅ **Tech Lead** role + skills (`tech-lead-assess`, `tech-lead-design`, `tech-lead-signoff`)
   + tech-design template (code structure + Story/Sub-task breakdown → Jira tickets)
+- ✅ **Developer** role (non-interactive) + skill (`developer-implement`) + coding standards
+  (`docs/standards/coding-standards.md`): one ticket → feature branch → tested code → PR
 - ⏳ Atlassian space/project (awaiting permission) — everything runs config-guarded until then
-- 🔜 **Developer** (non-interactive, feature-branch PRs), then QA / Reviewer / Release / Maintenance / Docs
+- 🔜 **Code Reviewer** and **QA** (gate the PR), then Release / Maintenance / Docs
