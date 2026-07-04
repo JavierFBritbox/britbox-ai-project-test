@@ -1,0 +1,7 @@
+{
+  "status": "unconfigured",
+  "apiBaseUrl": "https://api.qase.io/v1",
+  "projectCode": "TBD",
+  "tokenEnvVar": "QASE_API_TOKEN",
+  "notes": "The API token is a secret and is NOT stored here. Set it in the environment variable named by tokenEnvVar (e.g. export QASE_API_TOKEN=...). Fill projectCode with the Qase project code and set status to 'configured'."
+}

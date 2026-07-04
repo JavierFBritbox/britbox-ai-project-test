@@ -1,7 +1,9 @@
 # `config/` — Integration configuration
 
-This folder holds the shared configuration that every AI role/skill reads. **No Atlassian
+This folder holds the shared configuration that every AI role/skill reads. **No integration
 identifiers are hardcoded anywhere else in the repo** — they all come from here.
+
+Config files: `atlassian.json` (Confluence + Jira), `qase.json` (Qase test management).
 
 ## `atlassian.json`
 
@@ -37,3 +39,14 @@ You can also fill the values in by hand if you prefer.
 | `jira.projectKey` / `projectId` | The dedicated Jira project. |
 | `jira.issueTypes.*` | Numeric IDs of each issue type (needed to create issues via API). |
 | `jira.transitions.*` | Transition IDs used to move a ticket To Do → In Progress → In Review → Testing → Done. |
+
+## `qase.json`
+
+Configuration for **Qase** (test management), used by the QA role via the Qase REST API.
+
+| Field | Meaning |
+|---|---|
+| `apiBaseUrl` | Qase API base (default `https://api.qase.io/v1`). |
+| `projectCode` | The Qase project code QA works in. |
+| `tokenEnvVar` | Name of the **environment variable** holding the Qase API token. The token is a secret and is **never** stored in the repo — export it in your shell (e.g. `export QASE_API_TOKEN=…`). |
+| `status` | `unconfigured` until `projectCode` is set and the token env var is available. |

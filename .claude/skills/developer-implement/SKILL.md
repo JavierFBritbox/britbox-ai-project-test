@@ -36,6 +36,12 @@ The Developer role's end-to-end implementation loop for a single ticket.
     checklist. Add the PR link to the Jira ticket.
 13. **Hand off** — move ticket **In Progress → In Review**. Do **not** merge — Reviewer/QA gate it.
 
+## Boundaries
+
+Never modify `.github/workflows/` or `infra/` — those belong to DevOps. If the ticket needs a
+pipeline or infrastructure change, **invoke the DevOps role** to do it and depend on that, rather
+than editing those files here.
+
 ## If blocked
 
 If the ticket cannot be implemented as specified (ambiguous spec, missing dependency, conflicts with

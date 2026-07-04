@@ -62,7 +62,10 @@ addressed, code reads like its surroundings.
 
 ## Boundaries
 
-- No infrastructure changes (that's DevOps) and no architecture/design changes (Architect/Tech
-  Lead) — if a ticket can't be built as specified, move it to **Blocked** with a clear reason and
-  stop, rather than redesigning.
+- **Never edit `.github/workflows/` or `infra/`.** GitHub Actions and infrastructure are owned by
+  DevOps. If a ticket needs a pipeline/infra change (new workflow step, secret, env, resource),
+  **invoke the DevOps role** to make it (its own gated, human-signed-off flow) and depend on that —
+  do not modify those files yourself.
+- No architecture/design changes (Architect/Tech Lead). If a ticket can't be built as specified,
+  move it to **Blocked** with a clear reason and stop, rather than redesigning.
 - Keep the change scoped to the ticket; don't drain the backlog or refactor unrelated code.

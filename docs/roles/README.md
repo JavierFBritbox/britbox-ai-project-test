@@ -11,9 +11,9 @@ with a human counterpart and only advance the pipeline at explicit gates.
 | **DevOps** | `devops` | Terraform + GitHub Actions from requirement + architecture (repo-local, interactive) | Human agrees deploy rules/envs/account | `infra/`, `.github/workflows/`, `docs/features/<slug>/devops.md` |
 | **Tech Lead** | `tech-lead` | Translate requirement+architecture into code design; break work into code tickets (repo-local, interactive) | Human tech lead signs off design + breakdown | `docs/features/<slug>/tech-design.md` + Jira Stories/Sub-tasks |
 | **Developer** | `developer` | Consume one code ticket → implement (clean/secure/efficient + unit tests) → open PR (**non-interactive**) | Reviewer approves the PR merge | `apps/<module>/` code + PR per ticket |
-| **Code Reviewer** | _(next)_ | Independent review of each Sub-task PR vs coding standards; approve → merge | — (is the gate) | PR approval / change requests |
-| **Release Manager** | _(next)_ | On Story completion, cut RC version, changelog, promote on QA pass, trigger deploy | — (owns versioning) | git tags, `CHANGELOG.md`, `VERSION` |
-| **QA** | _(next)_ | Test the deployed RC vs acceptance criteria; file bug tickets; sign off the version | QA sign-off promotes the release | Bug tickets, QA report |
+| **Code Reviewer** | `code-reviewer` | Independent review of each Sub-task PR vs coding standards; approve → squash-merge | — (is the gate) | PR approval / change requests |
+| **Release Manager** | `release-manager` | On Story completion, cut RC version, changelog, promote on QA pass, trigger deploy | — (owns versioning) | git tags, `CHANGELOG.md`, `VERSION` |
+| **QA** | `qa` | Test the deployed RC vs acceptance criteria **using Qase**; file bug tickets; sign off the version | QA sign-off promotes the release | Qase runs, Bug tickets |
 
 More roles (Maintenance/Debugger, Docs, …) will be added here as they are defined.
 

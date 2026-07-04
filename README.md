@@ -128,6 +128,8 @@ template from `docs/templates/requirement-template.md`. See `config/README.md` f
   (`docs/standards/coding-standards.md`): one ticket → feature branch → tested code → PR
 - ✅ **Versioning & branching strategy** (`docs/process/versioning.md`, `VERSION`, `CHANGELOG.md`):
   trunk-based, SemVer, version per Story via RC-then-promote
-- ⏳ Atlassian space/project (awaiting permission) — everything runs config-guarded until then
-- 🔜 **Code Reviewer** (PR gate), **Release Manager** (versioning/RC), **QA** (test RC),
-  then Maintenance / Docs
+- ✅ **Code Reviewer** role (`code-reviewer-review`): per-Sub-task PR gate → approve + squash-merge
+- ✅ **Release Manager** role (`release-cut-rc`, `release-promote`): SemVer tags, changelog, RC/promote
+- ✅ **QA** role (`qa-test-run`) using **Qase** (`config/qase.json`): test the RC, file bugs, sign off
+- ⏳ Atlassian space/project + Qase project (awaiting setup) — everything runs config-guarded until then
+- 🔜 Maintenance / Debugger and Docs roles
