@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Delivery Pipeline — Process Overview</title>
+<style>
+  :root{
+    --bg:#0b1020; --bg2:#121a33; --panel:#182241; --panel2:#1f2c54;
+    --ink:#eaf0ff; --muted:#9db0d6; --line:#2b3a66;
+    --accent:#5b8cff; --accent2:#7cf0d6; --warn:#ffcc66; --human:#ff7d9c; --ai:#7cf0d6;
+    --shadow:0 18px 50px rgba(0,0,0,.45);
+    --r:16px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:radial-gradient(1200px 800px at 70% -10%,#1a2650 0%,var(--bg) 55%);
+    color:var(--ink); overflow:hidden;
+  }
+  .deck{height:100vh;width:100vw;position:relative}
+  .slide{
+    position:absolute;inset:0;display:none;flex-direction:column;
+    padding:6vh 7vw 10vh;opacity:0;transform:translateY(14px);
+    transition:opacity .4s ease,transform .4s ease;overflow:auto;
+  }
+  .slide.active{display:flex;opacity:1;transform:none}
+  h1{font-size:clamp(30px,5vw,64px);line-height:1.05;margin:.1em 0;letter-spacing:-.02em}
+  h2{font-size:clamp(24px,3.4vw,42px);margin:0 0 .5em;letter-spacing:-.01em}
+  h2 .n{color:var(--accent);font-weight:800;margin-right:.35em}
+  p.lead{font-size:clamp(16px,1.7vw,22px);color:var(--muted);max-width:60ch;line-height:1.5}
+  .eyebrow{color:var(--accent2);font-weight:700;letter-spacing:.18em;text-transform:uppercase;font-size:13px;margin-bottom:14px}
+  .center{justify-content:center}
+  .grid{display:grid;gap:18px}
+  .cards{grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin-top:12px}
+  .card{
+    background:linear-gradient(180deg,var(--panel),var(--panel2));
+    border:1px solid var(--line);border-radius:var(--r);padding:20px 22px;box-shadow:var(--shadow)
+  }
+  .card h3{margin:.1em 0 .35em;font-size:19px}
+  .card p{margin:0;color:var(--muted);font-size:15px;line-height:1.5}
+  .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    padding:4px 9px;border-radius:999px;margin-bottom:10px}
+  .tag.ai{background:rgba(124,240,214,.14);color:var(--ai);border:1px solid rgba(124,240,214,.4)}
+  .tag.human{background:rgba(255,125,156,.14);color:var(--human);border:1px solid rgba(255,125,156,.4)}
+  .tag.both{background:rgba(255,204,102,.14);color:var(--warn);border:1px solid rgba(255,204,102,.4)}
+
+  /* pipeline vertical flow */
+  .flow{display:flex;flex-direction:column;gap:10px;margin-top:8px;max-width:1000px}
+  .step{
+    display:grid;grid-template-columns:150px 1fr auto;align-items:center;gap:18px;
+    background:linear-gradient(90deg,var(--panel),rgba(24,34,65,.6));
+    border:1px solid var(--line);border-left:4px solid var(--accent);
+    border-radius:12px;padding:14px 18px;
+  }
+  .step .role{font-weight:800;font-size:15px}
+  .step .role small{display:block;color:var(--muted);font-weight:500;font-size:12px;margin-top:2px}
+  .step .desc{color:var(--muted);font-size:14px;line-height:1.45}
+  .step .art{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--accent2);white-space:nowrap}
+  .step.human{border-left-color:var(--human)}
+  .step.gate{border-left-color:var(--warn)}
+  .arrow{align-self:center;color:var(--line);font-size:20px;line-height:.4;margin-left:66px}
+
+  /* horizontal flow chips (sample flows) */
+  .chips{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px;margin-top:14px}
+  .chip{
+    display:flex;flex-direction:column;justify-content:center;min-width:150px;flex:1 1 150px;
+    background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);
+    border-radius:12px;padding:14px 16px;position:relative
+  }
+  .chip b{font-size:15px}
+  .chip span{color:var(--muted);font-size:12.5px;margin-top:4px;line-height:1.4}
+  .chip .who{position:absolute;top:8px;right:10px;font-size:10px;font-weight:800;letter-spacing:.05em}
+  .chip .who.ai{color:var(--ai)} .chip .who.hu{color:var(--human)}
+  .chip.g{border-color:rgba(255,204,102,.55);box-shadow:0 0 0 1px rgba(255,204,102,.25) inset}
+  .to{display:flex;align-items:center;color:var(--accent);font-size:24px;font-weight:700}
+
+  ul.clean{list-style:none;padding:0;margin:14px 0 0;max-width:70ch}
+  ul.clean li{padding:11px 0 11px 34px;position:relative;border-bottom:1px solid var(--line);color:var(--muted);font-size:16px;line-height:1.5}
+  ul.clean li:before{content:"";position:absolute;left:6px;top:18px;width:10px;height:10px;border-radius:3px;background:var(--accent);transform:rotate(45deg)}
+  ul.clean li b{color:var(--ink)}
+
+  .legend{display:flex;gap:20px;flex-wrap:wrap;margin-top:16px;color:var(--muted);font-size:13px}
+  .legend span{display:inline-flex;align-items:center;gap:7px}
+  .dot{width:12px;height:12px;border-radius:3px}
+  .dot.ai{background:var(--ai)} .dot.hu{background:var(--human)} .dot.ga{background:var(--warn)}
+
+  .kbd{font-family:ui-monospace,monospace;background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:2px 8px;font-size:13px}
+
+  /* chrome */
+  .bar{position:fixed;left:0;top:0;height:4px;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0;transition:width .3s;z-index:20}
+  .nav{position:fixed;bottom:20px;right:26px;display:flex;gap:8px;align-items:center;z-index:20}
+  .nav button{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:10px;
+    width:42px;height:38px;font-size:18px;cursor:pointer}
+  .nav button:hover{border-color:var(--accent)}
+  .count{position:fixed;bottom:26px;left:26px;color:var(--muted);font-size:13px;z-index:20}
+  .count b{color:var(--ink)}
+  .brand{position:fixed;top:20px;right:28px;color:var(--muted);font-size:12px;letter-spacing:.1em;text-transform:uppercase;z-index:20}
+  .foot{margin-top:auto;padding-top:22px;color:var(--muted);font-size:13px}
+  code.inline{font-family:ui-monospace,monospace;background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:2px 7px;color:var(--accent2);font-size:.9em}
+</style>
+</head>
+<body>
+<div class="bar" id="bar"></div>
+<div class="brand">AI Delivery Pipeline</div>
+
+<div class="deck" id="deck">
+
+  <!-- 1. TITLE -->
+  <section class="slide center">
+    <div class="eyebrow">BritBox · AI-Driven Development Environment</div>
+    <h1>An AI software team,<br>end&#8209;to&#8209;end.</h1>
+    <p class="lead">Specialised AI <b>roles</b> collaborate with humans through reusable <b>skills</b> to carry a project across its full lifecycle — requirement → architecture → infrastructure → code → release → maintenance.</p>
+    <div class="foot">Use <span class="kbd">→</span> / <span class="kbd">←</span> or <span class="kbd">Space</span> to navigate · <span class="kbd">F</span> for fullscreen</div>
+  </section>
+
+  <!-- 2. WHAT IT IS -->
+  <section class="slide">
+    <div class="eyebrow">The idea</div>
+    <h2>A team of roles, not a single bot</h2>
+    <p class="lead">Each role is a Claude agent with a narrow job and its own tools. They hand off through versioned artifacts in the repo — and pause at explicit human gates.</p>
+    <div class="grid cards">
+      <div class="card"><span class="tag ai">Agents</span><h3>Roles</h3><p>Product, Architect, DevOps, Tech Lead, Developer, Reviewer, Release Manager, QA, Maintenance, Docs.</p></div>
+      <div class="card"><span class="tag ai">Skills</span><h3>Procedures</h3><p>Reusable, gated steps: <code class="inline">product-review</code>, <code class="inline">jira-gate</code>, <code class="inline">verify-before-done</code>…</p></div>
+      <div class="card"><span class="tag both">Artifacts</span><h3>Handoffs</h3><p>One folder per feature under <code class="inline">docs/features/&lt;slug&gt;/</code> — requirement → architecture → tech-design.</p></div>
+      <div class="card"><span class="tag human">Gates</span><h3>Humans decide</h3><p>The pipeline only advances at explicit human sign-offs. AI never escalates cloud permissions.</p></div>
+    </div>
+  </section>
+
+  <!-- 3. THE ROLES -->
+  <section class="slide">
+    <div class="eyebrow">The cast</div>
+    <h2>Ten roles across the lifecycle</h2>
+    <div class="grid cards">
+      <div class="card"><span class="tag both">Confluence</span><h3>Product</h3><p>Owns the requirement lifecycle; reviews & converts the signed-off doc to <code class="inline">requirement.md</code>.</p></div>
+      <div class="card"><span class="tag both">Interactive</span><h3>Architect</h3><p>Designs the AWS solution; human architect sign-off → <code class="inline">architecture.md</code>.</p></div>
+      <div class="card"><span class="tag both">Interactive</span><h3>DevOps</h3><p>Terraform + GitHub Actions; OIDC; test→stage→prod; monitors CI/CD.</p></div>
+      <div class="card"><span class="tag both">Interactive</span><h3>Tech Lead</h3><p>Turns requirement+architecture into code design; breaks work into Jira tickets.</p></div>
+      <div class="card"><span class="tag ai">Non-interactive</span><h3>Developer</h3><p>Consumes one ticket → implements (tested) → opens a PR. Never merges.</p></div>
+      <div class="card"><span class="tag ai">Gate</span><h3>Code Reviewer</h3><p>Independent PR review vs standards → approve → squash-merge.</p></div>
+      <div class="card"><span class="tag ai">Automated</span><h3>Release Manager</h3><p>Cuts RC versions, tags, promotes on QA pass, triggers deploys.</p></div>
+      <div class="card"><span class="tag ai">Automated</span><h3>QA</h3><p>Tests the RC vs acceptance criteria (Qase); files bugs; signs off.</p></div>
+      <div class="card"><span class="tag ai">Front door</span><h3>Maintenance</h3><p>Post-release triage: reproduce, classify, route back into the pipeline.</p></div>
+      <div class="card"><span class="tag ai">Automated</span><h3>Docs</h3><p>Keeps end-user & developer docs in sync; publishes to Confluence.</p></div>
+    </div>
+  </section>
+
+  <!-- 4. THE PIPELINE -->
+  <section class="slide">
+    <div class="eyebrow">The main flow</div>
+    <h2>Requirement → released version</h2>
+    <div class="flow">
+      <div class="step human"><div class="role">Product <small>Confluence</small></div><div class="desc">Humans author the requirement; AI reviews, comments, iterates, then converts on sign-off.</div><div class="art">requirement.md</div></div>
+      <div class="arrow">▼</div>
+      <div class="step gate"><div class="role">Architect <small>interactive</small></div><div class="desc">Coverage check → AWS design → <b>human sign-off</b> → published to Confluence.</div><div class="art">architecture.md</div></div>
+      <div class="arrow">▼</div>
+      <div class="step gate"><div class="role">DevOps <small>interactive</small></div><div class="desc">Terraform + GitHub Actions; envs/account/deploy rules → <b>human sign-off</b>.</div><div class="art">infra/ · workflows/</div></div>
+      <div class="step gate"><div class="role">Tech Lead <small>interactive</small></div><div class="desc">Code design + work breakdown → <b>human sign-off</b> → Jira Stories/Sub-tasks.</div><div class="art">tech-design.md · tickets</div></div>
+      <div class="arrow">▼</div>
+      <div class="step"><div class="role">Developer <small>serial</small></div><div class="desc">One ticket at a time: branch → implement → PR. Next ticket only after the previous merges.</div><div class="art">PR per Sub-task</div></div>
+      <div class="arrow">▼</div>
+      <div class="step"><div class="role">Reviewer → RM → QA</div><div class="desc">Review & merge → cut RC → deploy to test → QA vs acceptance → promote to prod → Docs.</div><div class="art">vX.Y.0 released</div></div>
+    </div>
+    <div class="legend">
+      <span><i class="dot hu"></i> Human involved</span>
+      <span><i class="dot ga"></i> Human sign-off gate</span>
+      <span><i class="dot ai"></i> Automated</span>
+    </div>
+  </section>
+
+  <!-- 5. HUMAN GATES -->
+  <section class="slide">
+    <div class="eyebrow">Where humans decide</div>
+    <h2>Four sign-off gates</h2>
+    <p class="lead">Everything else runs automatically. Humans control <b>what</b> to build and the <b>solution shape</b>; AI owns turning it into shipped code.</p>
+    <ul class="clean">
+      <li><b>Product sign-off</b> — a human sets the requirement's Confluence status to <code class="inline">Signed Off</code>.</li>
+      <li><b>Architect agreement</b> — the human architect signs off the AWS design.</li>
+      <li><b>Tech Lead sign-off</b> — the human approves the code design <i>and</i> the ticket breakdown.</li>
+      <li><b>DevOps deploy-rule approval</b> — the human agrees environments, target AWS account, and deploy rules.</li>
+    </ul>
+    <div class="foot">Plus out-of-band human work: authoring requirements, driving the interactive interviews, and setting up cloud IAM / OIDC (AI never escalates permissions).</div>
+  </section>
+
+  <!-- 6. SAMPLE FLOW A -->
+  <section class="slide">
+    <div class="eyebrow">Sample flow · A</div>
+    <h2>New feature — the happy path</h2>
+    <p class="lead">A product idea becomes a released, documented version.</p>
+    <div class="chips">
+      <div class="chip"><span class="who hu">HUMAN</span><b>Write requirement</b><span>Product team drafts it in Confluence.</span></div>
+      <div class="to">→</div>
+      <div class="chip g"><span class="who hu">GATE</span><b>Sign off</b><span>Status → Signed Off → <code class="inline">requirement.md</code>.</span></div>
+      <div class="to">→</div>
+      <div class="chip g"><span class="who hu">GATE</span><b>Architecture</b><span>Architect designs & human signs off.</span></div>
+      <div class="to">→</div>
+      <div class="chip g"><span class="who hu">GATE</span><b>DevOps + Tech Lead</b><span>Infra approved · tickets created.</span></div>
+    </div>
+    <div class="chips">
+      <div class="chip"><span class="who ai">AI</span><b>Develop</b><span>Developer builds each ticket → PR.</span></div>
+      <div class="to">→</div>
+      <div class="chip"><span class="who ai">AI</span><b>Review & merge</b><span>Reviewer gates every PR.</span></div>
+      <div class="to">→</div>
+      <div class="chip"><span class="who ai">AI</span><b>RC → QA → promote</b><span>Test env → QA sign-off → prod.</span></div>
+      <div class="to">→</div>
+      <div class="chip"><span class="who ai">AI</span><b>Docs</b><span>Feature documented & published.</span></div>
+    </div>
+    <div class="foot">Green = automated · pink = human · amber = human sign-off gate.</div>
+  </section>
+
+  <!-- 7. SAMPLE FLOW B -->
+  <section class="slide">
+    <div class="eyebrow">Sample flow · B</div>
+    <h2>A production bug comes in</h2>
+    <p class="lead">Maintenance is the front door — it triages and re-enters the existing pipeline, it doesn't run a separate one.</p>
+    <div class="chips">
+      <div class="chip"><span class="who hu">HUMAN</span><b>Bug report</b><span>Incident or Jira ticket raised.</span></div>
+      <div class="to">→</div>
+      <div class="chip"><span class="who ai">AI</span><b>Triage</b><span>Maintenance reproduces & root-causes.</span></div>
+      <div class="to">→</div>
+      <div class="chip"><span class="who ai">AI</span><b>Classify</b><span>Defect · enhancement · new capability.</span></div>
+    </div>
+    <div class="chips">
+      <div class="chip"><span class="who ai">AI</span><b>Defect</b><span>→ Developer fix → Reviewer → patch <code class="inline">vX.Y.Z</code> → QA re-test.</span></div>
+      <div class="to">|</div>
+      <div class="chip"><span class="who ai">AI</span><b>Enhancement</b><span>→ Tech Lead new Story → Developer → …</span></div>
+      <div class="to">|</div>
+      <div class="chip"><span class="who hu">HUMAN</span><b>New capability</b><span>→ Product new requirement → full pipeline.</span></div>
+    </div>
+    <div class="foot">Routing depends on classification — small fixes stay fast; big changes re-enter at the top.</div>
+  </section>
+
+  <!-- 8. SAMPLE FLOW C -->
+  <section class="slide">
+    <div class="eyebrow">Sample flow · C</div>
+    <h2>Requirement sign-off, up close</h2>
+    <p class="lead">How the very first gate actually works — the Product role's review loop.</p>
+    <div class="flow">
+      <div class="step human"><div class="role">Human</div><div class="desc">Authors the requirement from the template in the Confluence Product folder.</div><div class="art">Status: Draft</div></div>
+      <div class="arrow">▼</div>
+      <div class="step"><div class="role">Product · AI</div><div class="desc"><code class="inline">product-review</code>: reads the doc, posts inline comments on anything ambiguous, untestable, or missing.</div><div class="art">Status: In Review</div></div>
+      <div class="arrow">▼</div>
+      <div class="step human"><div class="role">Human</div><div class="desc">Answers the comments, resolves open questions, completes the sign-off table.</div><div class="art">iterate…</div></div>
+      <div class="arrow">▼</div>
+      <div class="step gate"><div class="role">Human · GATE</div><div class="desc">Sets Status to <b>Signed Off</b> once complete.</div><div class="art">Signed Off</div></div>
+      <div class="arrow">▼</div>
+      <div class="step"><div class="role">Product · AI</div><div class="desc"><code class="inline">product-signoff-to-md</code>: verifies status, converts to markdown, records provenance, creates the feature Epic, hands off to Architect.</div><div class="art">requirement.md</div></div>
+    </div>
+  </section>
+
+  <!-- 9. RULES -->
+  <section class="slide">
+    <div class="eyebrow">Guardrails</div>
+    <h2>Non-negotiable rules</h2>
+    <ul class="clean">
+      <li><b>Config-driven integrations.</b> Every Atlassian ID comes from <code class="inline">config/atlassian.json</code>; skills refuse live calls while unconfigured.</li>
+      <li><b>Jira gate.</b> No role mutates anything without a ticket moved To Do → In Progress → In Review → Done.</li>
+      <li><b>Per-feature artifacts.</b> One folder per feature; never overwrite another feature's files.</li>
+      <li><b>Author / review separation.</b> The authoring pass and the verification pass stay distinct — verify before done.</li>
+      <li><b>Enforced DevOps standards.</b> GitHub Actions + AWS/Terraform only; OIDC, no long-lived keys; humans own cloud permissions.</li>
+    </ul>
+  </section>
+
+  <!-- 10. CLOSE -->
+  <section class="slide center">
+    <div class="eyebrow">In one line</div>
+    <h1>Humans set direction.<br>The AI team ships it.</h1>
+    <p class="lead">Requirement → architecture → infrastructure → code → release → docs → maintenance — with humans gating the decisions that matter, and everything in between automated and traceable.</p>
+    <div class="foot">docs/process/README.md · docs/roles/README.md</div>
+  </section>
+
+</div>
+
+<div class="count"><b id="cur">1</b> / <span id="tot">10</span></div>
+<div class="nav">
+  <button id="prev" aria-label="Previous">‹</button>
+  <button id="next" aria-label="Next">›</button>
+</div>
+
+<script>
+  const slides=[...document.querySelectorAll('.slide')];
+  let i=0;
+  const bar=document.getElementById('bar'),cur=document.getElementById('cur');
+  document.getElementById('tot').textContent=slides.length;
+  function show(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+    bar.style.width=((i+1)/slides.length*100)+'%';
+    cur.textContent=i+1;
+  }
+  function next(){show(i+1)} function prev(){show(i-1)}
+  document.getElementById('next').onclick=next;
+  document.getElementById('prev').onclick=prev;
+  document.addEventListener('keydown',e=>{
+    if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();next()}
+    else if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();prev()}
+    else if(e.key==='Home'){show(0)} else if(e.key==='End'){show(slides.length-1)}
+    else if(e.key.toLowerCase()==='f'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}
+  });
+  // click right/left half of screen to navigate (ignore clicks on nav/links)
+  document.getElementById('deck').addEventListener('click',e=>{
+    if(e.target.closest('button,a')) return;
+    (e.clientX> window.innerWidth/2)?next():prev();
+  });
+  show(0);
+</script>
+</body>
+</html>
