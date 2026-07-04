@@ -53,9 +53,10 @@ These are mandatory; a setup that violates any of them is not "Agreed":
 - **Environments, secrets, and variables are defined in GitHub** (GitHub Environments, env-scoped),
   consumed by workflows — **never** committed to the repo/Terraform/code.
 - **Auth = GitHub OIDC → AWS IAM role per environment. No long-lived AWS keys anywhere.**
-- **Three mandatory environments — `test`, `stage`, `prod`** — each with its own AWS account, GitHub
-  Environment (with protection rules), OIDC role, and Terraform state key. **Prod requires manual
-  approval.** Promotion path is always `test → stage → prod`.
+- **Environment model `test → stage → prod`** — may **start with one environment (one AWS account)**
+  and add the rest later via `devops-add-environment`. Each environment (whenever added) has its own
+  AWS account, GitHub Environment (with protection rules), OIDC role, and Terraform state key.
+  **Prod requires manual approval.** Never skip an existing environment on the promotion path.
 - Remote Terraform **state** (S3 + DynamoDB lock), per-env keys; every resource tagged + traceable to
   an architecture component.
 - Consult official docs before non-trivial choices — AWS skills (`aws-core`, `aws-serverless`,
@@ -91,7 +92,9 @@ changes, what is reused, what is migrated/decommissioned. Never clobber unrelate
    `docs/templates/devops-template.md`; defines envs, AWS accounts, deploy rules, Actions steps.
 3. **Sign-off → generate → publish** — `devops-signoff-to-md`: on sign-off, emit Terraform +
    workflows, finalize `devops.md`, update `INDEX.md`, publish to Confluence.
-4. **Monitor & fix** — `devops-monitor`: watch GitHub Actions runs, diagnose failures, and resolve
+4. **Add an environment** — `devops-add-environment`: incrementally add `test`/`stage`/`prod` (own
+   account, GitHub Environment, OIDC role, TF state key) and wire it into the promotion path.
+5. **Monitor & fix** — `devops-monitor`: watch GitHub Actions runs, diagnose failures, and resolve
    pipeline issues; keep the pipeline green.
 
 Keep authoring and review as separate passes; verify (`terraform validate`/`plan`, workflow lint)

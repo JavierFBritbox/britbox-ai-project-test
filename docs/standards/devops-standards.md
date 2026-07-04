@@ -16,9 +16,12 @@ review of infra changes verify against them. A DevOps setup that violates any ru
 - **Auth: GitHub OIDC → AWS IAM role assumption**, one role per environment. **No long-lived AWS
   access keys** anywhere — not in the repo, not in GitHub secrets.
 
-## Mandatory environments — all three
+## Environments — incremental toward test / stage / prod
 
-DevOps **must** set up a full multi-environment topology. No skipping straight to prod.
+You may **start with a single environment (one AWS account)** and **add the others later** via the
+`devops-add-environment` skill. The **target topology is `test → stage → prod`** and reaching it is
+strongly recommended before carrying production traffic — but provisioning is incremental, not
+required all at once.
 
 | Env | Role | Deploy trigger | Gate |
 |---|---|---|---|
@@ -26,9 +29,12 @@ DevOps **must** set up a full multi-environment topology. No skipping straight t
 | **stage** | pre-production; smoke/UAT | on promotion | automatic after test |
 | **prod** | production | on promotion | **manual approval** (GitHub Environment protection + required reviewers) |
 
-Each environment has: its **own AWS account** (or a clearly isolated account boundary), its **own
-GitHub Environment** (with scoped secrets/variables + protection rules), its **own OIDC IAM role**,
-and its **own Terraform state key**. **Promotion path is `test → stage → prod`** — always in order.
+**Rules that hold for every environment, whenever it is added:** its **own AWS account** (or a
+clearly isolated account boundary), its **own GitHub Environment** (scoped secrets/variables +
+protection rules), its **own OIDC IAM role** (human-provisioned), and its **own Terraform state
+key**. **Prod (when it exists) requires manual approval.** The **promotion path follows the
+environments that exist, in `test → stage → prod` order** — you cannot skip an **existing**
+environment to reach prod. Adding an environment is done through `devops-add-environment`.
 
 ## Terraform
 
@@ -50,7 +56,7 @@ and its **own Terraform state key**. **Promotion path is `test → stage → pro
 
 - Secrets/keys in the repo, Terraform files, or workflow YAML literals.
 - Manual AWS console mutations for Terraform-managed resources.
-- Deploying to prod without going through test and stage.
+- Skipping an **existing** environment on the promotion path to reach prod.
 - Long-lived cloud credentials of any kind.
 
 ## Human prerequisites & permission boundaries
@@ -72,9 +78,12 @@ The AI operates **within** granted cloud permissions — it never creates or esc
 
 ## DevOps Definition of Done
 
-- [ ] `test`, `stage`, `prod` GitHub Environments exist with scoped secrets/variables and protection
-      rules; **prod requires approval**.
-- [ ] OIDC IAM role per environment; **no static AWS keys**.
-- [ ] Terraform `validate`/`plan` clean; remote state backend configured per env.
-- [ ] Required workflows present and green; promotion path `test → stage → prod` enforced.
-- [ ] `devops.md` documents environments, AWS accounts, deploy rules, promotion path, and rollback.
+- [ ] At least **one** environment provisioned; each existing environment has its own GitHub
+      Environment (scoped secrets/variables + protection rules) — **prod, when present, requires
+      approval**. (Target: `test`/`stage`/`prod`, added incrementally via `devops-add-environment`.)
+- [ ] OIDC IAM role per existing environment; **no static AWS keys**.
+- [ ] Terraform `validate`/`plan` clean; remote state backend configured per existing env.
+- [ ] Required workflows present and green; promotion path `test → stage → prod` enforced across the
+      environments that exist.
+- [ ] `devops.md` documents the existing environments, AWS accounts, deploy rules, promotion path,
+      and rollback.

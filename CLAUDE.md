@@ -45,8 +45,9 @@ Full detail: `docs/process/README.md`. Roles: `docs/roles/README.md`.
    (Confluence + Jira) is provided once by `project-init`; all other tools are prompted just-in-time.
 8. **DevOps standards (enforced).** CI/CD = **GitHub Actions only**; infrastructure = **AWS via
    Terraform only**; environments/secrets/variables defined in **GitHub Environments**; auth via
-   **GitHub OIDC → AWS IAM role per env** (no long-lived keys); **three mandatory environments
-   `test`/`stage`/`prod`** (prod behind manual approval), promotion `test → stage → prod`. Full rules
+   **GitHub OIDC → AWS IAM role per env** (no long-lived keys); environment model
+   **`test → stage → prod`** — may start with one environment and add others via
+   `devops-add-environment` (prod behind manual approval). Full rules
    in `docs/standards/devops-standards.md`. The AI never creates/escalates cloud permissions: the
    **OIDC role is set up by a human DevOps engineer**, and new permissions are **requested from the
    Platform Engineering human team**. DevOps also **monitors GitHub Actions runs** and fixes pipeline

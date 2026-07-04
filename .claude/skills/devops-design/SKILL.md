@@ -27,7 +27,9 @@ decides; you revise; repeat until sign-off. No infra is generated until sign-off
    (Status `Draft`).
 3. **Interview the engineer** on the specifics (the platform/env set/auth are FIXED by
    `docs/standards/devops-standards.md` — enforce them):
-   - **AWS account + region** for each of the three mandatory environments **test / stage / prod**;
+   - **AWS account + region** for the environment(s) you're provisioning now — you may **start with
+     one** and add `stage`/`prod` later via `devops-add-environment`; target model is
+     **test → stage → prod**;
    - **Deploy rules** — triggers, required approvals/reviewers (**prod requires manual approval**),
      promotion path (`test → stage → prod`), rollback strategy, change windows;
    - **GitHub Actions steps** — CI (lint/test/build), `terraform plan` on PR, `terraform apply`

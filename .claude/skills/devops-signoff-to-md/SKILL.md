@@ -23,17 +23,19 @@ Either is sufficient (never mark on the human's behalf):
 
 1. Confirm sign-off and that open questions are resolved. If not, stop and report.
 2. **Generate infrastructure** from the agreed design, per `docs/standards/devops-standards.md`:
-   - `infra/` — Terraform modules + **per-env config for `test`/`stage`/`prod`** under
-     `infra/envs/{test,stage,prod}`, remote state (S3 + DynamoDB) with per-env keys, each resource
-     tagged and traceable to an architecture component. **No secrets or `*.tfvars` with secrets in
-     VCS** (`.gitignore` already excludes them).
+   - `infra/` — Terraform modules + **per-env config for the environment(s) being provisioned now**
+     (at least one; `infra/envs/<env>`), remote state (S3 + DynamoDB) with per-env keys, each
+     resource tagged and traceable to an architecture component. **No secrets or `*.tfvars` with
+     secrets in VCS** (`.gitignore` already excludes them).
    - `.github/workflows/` — the required workflows (CI, terraform-plan on PR, terraform-apply with
-     environment protection, deploy/smoke) covering all three environments; RC tag → **test**,
-     promotion → **stage → prod** with **prod behind manual approval**. Use **GitHub OIDC → AWS IAM
-     role per env**; reference GitHub Environment secrets/variables, **never inline**.
-   - **GitHub Environments** — ensure `test`, `stage`, `prod` exist (via `gh`/API) with their
+     environment protection, deploy/smoke) for the environment(s) that exist; RC tag → **test**,
+     promotion follows `test → stage → prod` across existing envs with **prod behind manual
+     approval**. Use **GitHub OIDC → AWS IAM role per env**; reference GitHub Environment
+     secrets/variables, **never inline**.
+   - **GitHub Environments** — ensure the environment(s) being provisioned exist (via `gh`/API) with
      protection rules (prod = required reviewers) and scoped variables/secrets. Prompt the human to
-     set secret **values** in GitHub (never store them in the repo).
+     set secret **values** in GitHub (never store them in the repo). Add more environments later with
+     `devops-add-environment`.
 3. **Verify** against the DevOps Definition of Done: `terraform fmt -check`, `terraform validate`
    (and `plan` if creds allow), lint the workflows, and confirm the three environments + OIDC roles
    (no static keys) + promotion path exist. Fix issues; don't claim done on failure.
