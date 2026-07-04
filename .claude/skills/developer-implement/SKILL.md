@@ -21,22 +21,24 @@ The Developer role's end-to-end implementation loop for a single ticket.
    branch/PR at a time.
 3. **Select one ticket** — the given `<KEY>`, else the highest-priority unblocked **To Do**
    Story/Sub-task under the active feature Epic (dependencies Done), respecting sequencing.
-5. **Claim** — `jira-gate`: move the Sub-task **To Do → In Progress**. If its parent **Story** is
+4. **Claim** — `jira-gate`: move the Sub-task **To Do → In Progress**. If its parent **Story** is
    still **To Do**, move the Story → **In Progress** too (and set `INDEX.md` status → `In Development`
    the first time any Sub-task of the feature starts).
-6. **Gather context** — read the ticket, `docs/features/<slug>/tech-design.md`, `architecture.md`,
+5. **Gather context** — read the ticket, `docs/features/<slug>/tech-design.md`, `architecture.md`,
    `requirement.md`, the target module's `CLAUDE.md`, and `docs/standards/coding-standards.md`.
-7. **Branch** — from fresh `main`: `git switch -c <JIRA-KEY>-<kebab-summary>`.
-8. **Implement** — in the target `apps/<module>`/`packages/<lib>`, matching existing style/stack.
-   Clean, secure, efficient (standards doc). Consult official library/framework docs when unsure.
-9. **Unit tests** — cover happy/edge/error paths from the acceptance criteria; deterministic; meet
-   the coverage bar.
-10. **Verify locally** — run tests, lint, format, type checks, dependency audit, and a secret scan of
-    the diff. Iterate until all green; never proceed on failure.
-11. **Commit** — conventional commit(s) referencing the Jira key; scan staged files for secrets first.
-12. **PR** — `gh pr create` from the branch to `main`; body = what/why, how tested, acceptance-criteria
+6. **Branch** — from fresh `main`: `git switch -c <JIRA-KEY>-<kebab-summary>`.
+7. **Implement test-first (TDD)** — in the target `apps/<module>`/`packages/<lib>`, matching existing
+   style/stack. For each behavior from the acceptance criteria: write a failing test (**RED**, watch
+   it fail for the right reason), write minimal code to pass (**GREEN**), then **REFACTOR** while
+   green. Clean, secure, efficient (standards doc). Consult official library/framework docs when
+   unsure. Cover happy/edge/error paths; tests deterministic; meet the coverage bar.
+8. **Verify locally** — via `verify-before-done`: run tests, lint, format, type checks, dependency
+   audit, and a secret scan of the diff; read the output. Iterate until all green; never proceed on
+   failure or claim done without fresh evidence.
+9. **Commit** — conventional commit(s) referencing the Jira key; scan staged files for secrets first.
+10. **PR** — `gh pr create` from the branch to `main`; body = what/why, how tested, acceptance-criteria
     checklist. Add the PR link to the Jira ticket.
-13. **Hand off** — move ticket **In Progress → In Review**. Do **not** merge — Reviewer/QA gate it.
+11. **Hand off** — move ticket **In Progress → In Review**. Do **not** merge — Reviewer/QA gate it.
 
 ## Boundaries
 

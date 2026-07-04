@@ -34,9 +34,11 @@ Full detail: `docs/process/README.md`. Roles: `docs/roles/README.md`.
    another feature's files; treat same-slug changes as revisions.
 4. **Human gates.** Advance the pipeline only at explicit human approvals: Product sign-off,
    Architect agreement, DevOps deploy-rule approval.
-5. **Author/review separation.** Keep the authoring pass and the review/verification pass distinct;
-   verify before claiming a step complete. The Developer never merges its own PR — the Reviewer/QA
-   roles gate the merge.
+5. **Author/review separation + verify before done.** Keep the authoring pass and the
+   review/verification pass distinct. Before claiming anything complete/fixed/passing — or
+   committing, merging, tagging, or opening a PR — run the `verify-before-done` skill: **no
+   completion claim without fresh verification evidence.** The Developer never merges its own PR —
+   the Reviewer/QA roles gate the merge.
 6. **Coding standards.** All code changes meet `docs/standards/coding-standards.md` (clean, secure,
    efficient, unit-tested; Definition of Done). The Developer writes to it; Reviewer/QA verify it.
 7. **Preflight tool checks.** Before using any external tool/credential (`gh`, AWS, Terraform, Qase,

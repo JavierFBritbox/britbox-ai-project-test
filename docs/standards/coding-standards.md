@@ -43,6 +43,25 @@ module's own `CLAUDE.md`) refine — never lower — this bar.
 
 ## Testing
 
+### Test-Driven Development (required method)
+
+Write the test **first**, watch it fail, then write minimal code to pass. RED → GREEN → REFACTOR.
+
+```
+NO PRODUCTION CODE WITHOUT A FAILING TEST FIRST
+```
+
+- **RED** — write one minimal test for the next behavior (from the ticket's acceptance criteria);
+  run it and **confirm it fails for the right reason**. A test you didn't watch fail proves nothing.
+- **GREEN** — write the minimal code to make it pass; run and confirm all green.
+- **REFACTOR** — clean up while staying green.
+- **Bug fixes** — first write a regression test that reproduces the bug (RED), then fix (GREEN); this
+  proves both the bug and the fix.
+- Exceptions (throwaway prototypes, generated code, pure config) require the human's agreement.
+  "Skip TDD just this once" is a rationalization — don't.
+
+### Test quality
+
 - **Unit tests are mandatory** for new/changed logic. Use the module's standard framework.
 - Structure tests Arrange–Act–Assert; one behavior per test; descriptive names.
 - Cover happy path, boundaries, and error/failure paths. Derive cases from acceptance criteria.

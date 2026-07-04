@@ -18,10 +18,12 @@ Independent PR review + merge gate for a single Sub-task.
    PR but flag pending ticket transitions.
 2. **Locate** the open PR (`gh pr view`) and its Jira Sub-task; read `tech-design.md` + acceptance
    criteria.
-3. **CI check** — confirm required checks pass (`gh pr checks`). If failing → request changes; stop.
+3. **CI check** — confirm required checks pass (`gh pr checks`), reading the output
+   (`verify-before-done` — evidence, not "looks green"). If failing → request changes; stop.
 4. **Review the diff** (`gh pr diff`) against `docs/standards/coding-standards.md`:
    correctness/acceptance, security (input validation, secrets/PII, injection, least privilege,
-   deps), efficiency, clean code, and test adequacy (present, meaningful, deterministic, coverage).
+   deps), efficiency, clean code, and test adequacy (present, meaningful, deterministic, coverage;
+   for a bug fix, a **regression test** that fails without the fix — TDD RED→GREEN).
 5. **Post comments** — `gh pr review` with line-anchored, actionable feedback.
 6. **Decision:**
    - Problems → `gh pr review --request-changes`; `jira-gate` move Sub-task **In Review → In
