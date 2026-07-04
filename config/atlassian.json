@@ -1,0 +1,29 @@
+{
+  "status": "unconfigured",
+  "cloudId": "5f44c581-ad3b-4818-8ebc-5999ba283710",
+  "site": "britbox.atlassian.net",
+  "confluence": {
+    "spaceKey": "TBD",
+    "spaceId": "TBD",
+    "productPageId": "TBD"
+  },
+  "jira": {
+    "projectKey": "TBD",
+    "projectId": "TBD",
+    "issueTypes": {
+      "epic": "TBD",
+      "story": "TBD",
+      "task": "TBD",
+      "bug": "TBD",
+      "subtask": "TBD"
+    },
+    "transitions": {
+      "toDo": "TBD",
+      "inProgress": "TBD",
+      "inReview": "TBD",
+      "testing": "TBD",
+      "done": "TBD",
+      "blocked": "TBD"
+    }
+  }
+}

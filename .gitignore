@@ -1,0 +1,25 @@
+# This project SHIPS its .claude/ agents and skills so the whole team gets them
+# on clone. The user's global gitignore excludes .claude/, so re-include it here,
+# then re-exclude only the user-local, non-shareable bits.
+!.claude/
+!.claude/**
+.claude/settings.local.json
+
+# Terraform (populated later by the DevOps role)
+**/.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+*.tfvars
+!*.tfvars.example
+
+# Node / build
+node_modules/
+dist/
+build/
+.DS_Store
+
+# Env & secrets
+.env
+.env.*
+!.env.example
