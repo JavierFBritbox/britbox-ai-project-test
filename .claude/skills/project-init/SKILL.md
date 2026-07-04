@@ -48,7 +48,9 @@ Then provide the **space key** and **project key** to this skill.
    - a **`DevOps`** landing page/folder (record its id as `confluence.devopsPageId`) where the
      DevOps role publishes agreed deployment designs, linked to the architecture/requirement,
    - a **`Technical Design`** landing page/folder (record its id as `confluence.techDesignPageId`)
-     where the Tech Lead role publishes agreed technical designs, linked to architecture/requirement.
+     where the Tech Lead role publishes agreed technical designs, linked to architecture/requirement,
+   - a **`Documentation`** landing page/folder (record its id as `confluence.docsPageId`) where the
+     Docs role publishes end-user/developer documentation for released features.
 7. **Write back** all discovered IDs to `config/atlassian.json` and set `"status": "configured"`.
 
 ## Guard

@@ -36,6 +36,7 @@ You can also fill the values in by hand if you prefer.
 | `confluence.architecturePageId` | Page ID of the **Architecture** page/folder where agreed architectures are published and linked to their requirement. |
 | `confluence.devopsPageId` | Page ID of the **DevOps** page/folder where agreed deployment designs are published and linked to their architecture/requirement. |
 | `confluence.techDesignPageId` | Page ID of the **Technical Design** page/folder where agreed technical designs are published and linked to their architecture/requirement. |
+| `confluence.docsPageId` | Page ID of the **Documentation** page/folder where the Docs role publishes end-user/developer docs for released features. |
 | `jira.projectKey` / `projectId` | The dedicated Jira project. |
 | `jira.issueTypes.*` | Numeric IDs of each issue type (needed to create issues via API). |
 | `jira.transitions.*` | Transition IDs used to move a ticket To Do → In Progress → In Review → Testing → Done. |

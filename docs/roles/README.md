@@ -15,8 +15,9 @@ with a human counterpart and only advance the pipeline at explicit gates.
 | **Release Manager** | `release-manager` | On Story completion, cut RC version, changelog, promote on QA pass, trigger deploy | — (owns versioning) | git tags, `CHANGELOG.md`, `VERSION` |
 | **QA** | `qa` | Test the deployed RC vs acceptance criteria **using Qase**; file bug tickets; sign off the version | QA sign-off promotes the release | Qase runs, Bug tickets |
 | **Maintenance/Debugger** | `maintenance` | Post-release front door: intake, reproduce/root-cause, classify, route back into the pipeline | — (routes to owning role) | intake docs, Bug tickets, diagnoses |
+| **Docs/Technical Writer** | `docs-writer` | Keep end-user + developer docs in sync with released features; publish to Confluence | — | `docs/product/<slug>/` + Confluence pages |
 
-More roles (Docs, …) will be added here as they are defined.
+The full role roster is complete. Further roles can be added here if new needs emerge.
 
 The Developer, Code Reviewer, and QA hold code to `docs/standards/coding-standards.md`.
 Versioning/branching is defined in `docs/process/versioning.md`.
