@@ -37,15 +37,15 @@ config/environment differences — what changed that could cause this?
 service → DB, CI → build → deploy), log what data enters/exits and verify config propagation. Run
 once to show *where* it breaks, then investigate that component.
 
-## Then
+**Phase 5 — Confirm root cause.** Form a hypothesis and test it against the evidence until confirmed
+(not just plausible). Assess blast radius / regression risk and severity.
 
-5. **Confirm root cause** — form a hypothesis and test it against the evidence until confirmed (not
-   just plausible). Assess blast radius / regression risk and severity.
-6. **Write the diagnosis** into the intake doc (§6): reproduced?/where, confirmed root cause,
-   affected files/components, suggested fix approach, and regression risk. This is the Developer's
-   Bug-ticket context — and it should specify the **regression test** that must go RED before the fix.
-7. **Hand off** — return to `maintenance-triage` to create/attach the **Bug** ticket for the
-   Developer. Do **not** implement the fix here.
+**Phase 6 — Write the diagnosis** into the intake doc (§6): reproduced?/where, confirmed root cause,
+affected files/components, suggested fix approach, and regression risk. This is the Developer's
+Bug-ticket context — and it must specify the **regression test** that has to go RED before the fix.
+
+**Phase 7 — Hand off.** Return to `maintenance-triage` to create/attach the **Bug** ticket for the
+Developer. Do **not** implement the fix here.
 
 ## Boundary
 

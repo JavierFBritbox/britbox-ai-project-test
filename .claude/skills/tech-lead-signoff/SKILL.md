@@ -1,11 +1,9 @@
 ---
 name: tech-lead-signoff
 description: >-
-  Finalizes the technical design when the human tech lead SIGNS OFF (repo-local). Converts the draft
-  into docs/features/<slug>/tech-design.md, CREATES the code tickets in Jira (Stories + Sub-tasks
-  under the feature Epic, in To Do), updates docs/features/INDEX.md, publishes the design to
-  Confluence linked to architecture/requirement, and hands the tickets to the Developer role.
-  Trigger: "tech design signed off", "create the code tickets", "tech-lead sign off <slug>".
+  Use when the human tech lead has signed off a technical design. Finalizes tech-design.md and
+  creates the code tickets (Jira Stories + Sub-tasks) the Developer will consume. Trigger: "tech
+  design signed off", "create the code tickets", "tech-lead sign off <slug>".
 ---
 
 # tech-lead-signoff
@@ -26,8 +24,8 @@ Either is sufficient (never mark on the human's behalf):
    decisions; Status `Agreed`; Agreement section with name + date; provenance footer linking
    requirement + architecture).
 3. **Create the code tickets in Jira** (config-guarded). Read `config/atlassian.json`:
-   - Ensure the **feature Epic** exists (create it under `jira.projectKey` using
-     `issueTypes.epic` if missing).
+   - Use the **feature Epic** (authoritatively created by the Product role at requirement sign-off).
+     Only create one as a fallback if it's genuinely absent.
    - For each Story in section 10 → create a **Story** (`issueTypes.story`) linked to the Epic,
      in **To Do**.
    - For each Sub-task → create a **Sub-task** (`issueTypes.subtask`) under its Story, in **To Do**,

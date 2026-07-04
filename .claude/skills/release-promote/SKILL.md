@@ -21,7 +21,8 @@ Turns a QA-approved RC into a released version. Follows `docs/process/versioning
 1. **Config guard** — read `config/atlassian.json`; if Jira `unconfigured`/`TBD`, do the local work
    and flag pending transitions.
 2. **Verify sign-off** — confirm QA passed the exact `vX.Y.0-rc.N` being promoted. If not, stop.
-3. **Compute released version** — drop the `-rc.N` suffix → `vX.Y.0`.
+3. **Compute released version** — `scripts/next-version.sh promote` (drops the `-rc.N` suffix →
+   `X.Y.Z`).
 4. **Update files** — set `VERSION` and manifests to `X.Y.0`; move the CHANGELOG entry from RC to the
    released version with today's date. Commit to `main`.
 5. **Tag & push** — `git tag vX.Y.0` and push. This fires the DevOps deploy workflow to

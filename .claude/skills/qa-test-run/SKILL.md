@@ -1,11 +1,9 @@
 ---
 name: qa-test-run
 description: >-
-  Runs QA for a deployed release candidate using Qase. Ensures Qase test cases exist for the Story's
-  acceptance criteria, creates a Qase test run for the RC, executes automated + manual checks against
-  the test environment, records results, files defects (Qase + linked Jira Bug) for failures, and on
-  a green run records a sign-off for that RC and notifies the Release Manager. Trigger: "test RC",
-  "qa test <version>", "run QA for <slug>", "qa-test-run".
+  Use when a release candidate has been deployed and needs testing. Tests the RC against the Story's
+  acceptance criteria using Qase, files defects (Qase + linked Jira Bug) for failures, and signs off
+  the RC on a green run. Trigger: "test RC", "qa test <version>", "run QA for <slug>", "qa-test-run".
 ---
 
 # qa-test-run

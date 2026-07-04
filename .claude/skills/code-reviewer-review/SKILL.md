@@ -1,11 +1,9 @@
 ---
 name: code-reviewer-review
 description: >-
-  Reviews and gates one Developer PR (a Sub-task). Confirms CI is green, reviews the diff against
-  the coding standards (correctness, security, efficiency, clean code, tests, acceptance criteria),
-  posts review comments, then either requests changes (ticket → In Progress) or approves + squash-
-  merges (ticket → Done) and, if it was the Story's last Sub-task, signals the Release Manager.
-  Trigger: "review PR <#>", "review the developer PR", "code review <KEY>".
+  Use when a Developer has opened a PR for a Sub-task and it needs the independent review/merge gate.
+  Approves + squash-merges clean PRs (signalling the Release Manager on a Story's last Sub-task) or
+  requests changes. Trigger: "review PR <#>", "review the developer PR", "code review <KEY>".
 ---
 
 # code-reviewer-review

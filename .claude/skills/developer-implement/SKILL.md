@@ -1,11 +1,9 @@
 ---
 name: developer-implement
 description: >-
-  Implements ONE code ticket end to end (non-interactive). Claims a Jira Story/Sub-task (To Do →
-  In Progress), creates a feature branch, implements it in the target module to the repo coding
-  standards with mandatory unit tests, verifies locally (tests/lint/type/audit/secret-scan), commits
-  and opens a PR, then moves the ticket to In Review. Never merges to main. Trigger: "implement
-  ticket <KEY>", "develop <KEY>", "pick up the next ticket".
+  Use when a code ticket (Jira Story/Sub-task) is ready to build. Implements one ticket end to end —
+  non-interactive and test-first — then opens a PR and moves it to In Review; never merges to main.
+  Trigger: "implement ticket <KEY>", "develop <KEY>", "pick up the next ticket".
 ---
 
 # developer-implement
@@ -35,7 +33,8 @@ The Developer role's end-to-end implementation loop for a single ticket.
 8. **Verify locally** — via `verify-before-done`: run tests, lint, format, type checks, dependency
    audit, and a secret scan of the diff; read the output. Iterate until all green; never proceed on
    failure or claim done without fresh evidence.
-9. **Commit** — conventional commit(s) referencing the Jira key; scan staged files for secrets first.
+9. **Commit** — conventional commit(s) referencing the Jira key; run `scripts/secret-scan.sh` on the
+   staged diff first (must be clean).
 10. **PR** — `gh pr create` from the branch to `main`; body = what/why, how tested, acceptance-criteria
     checklist. Add the PR link to the Jira ticket.
 11. **Hand off** — move ticket **In Progress → In Review**. Do **not** merge — Reviewer/QA gate it.

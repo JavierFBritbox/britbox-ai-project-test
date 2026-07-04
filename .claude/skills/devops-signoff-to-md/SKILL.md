@@ -1,11 +1,9 @@
 ---
 name: devops-signoff-to-md
 description: >-
-  Finalizes the DevOps setup when the human engineer SIGNS OFF (repo-local). Generates Terraform
-  (infra/) and GitHub Actions (.github/workflows/), converts the draft into
-  docs/features/<slug>/devops.md, updates docs/features/INDEX.md, and publishes the agreed doc to
-  the Confluence DevOps folder linked to the architecture + requirement. Trigger: "devops signed
-  off", "generate infra", "devops sign off <slug>".
+  Use when the human DevOps engineer has signed off the deployment design. Generates the Terraform
+  (infra/) + GitHub Actions (.github/workflows/), writes devops.md, and publishes to Confluence.
+  Trigger: "devops signed off", "generate infra", "devops sign off <slug>".
 ---
 
 # devops-signoff-to-md
@@ -36,9 +34,10 @@ Either is sufficient (never mark on the human's behalf):
      protection rules (prod = required reviewers) and scoped variables/secrets. Prompt the human to
      set secret **values** in GitHub (never store them in the repo). Add more environments later with
      `devops-add-environment`.
-3. **Verify** against the DevOps Definition of Done: `terraform fmt -check`, `terraform validate`
-   (and `plan` if creds allow), lint the workflows, and confirm the three environments + OIDC roles
-   (no static keys) + promotion path exist. Fix issues; don't claim done on failure.
+3. **Verify** against the DevOps Definition of Done (via `verify-before-done`): `terraform fmt
+   -check`, `terraform validate` (and `plan` if creds allow), lint the workflows, and confirm the
+   **environment(s) provisioned now** (at least one) have their OIDC role (no static keys) and are
+   wired into the promotion path in order. Fix issues; don't claim done on failure.
 4. Finalize `docs/features/<slug>/devops.md` (strip HTML comments; keep answered questions; Status
    `Agreed`; Agreement section with name + date; provenance footer linking requirement +
    architecture).

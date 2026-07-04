@@ -1,13 +1,9 @@
 ---
 name: architect-design
 description: >-
-  Core of the Architect role — the trigger for the architecture step. Runs an INTERACTIVE,
-  repo-local interview with the human architect: reads the signed-off requirement, checks whether
-  existing architecture already covers it, proposes what the app needs (infrastructure,
-  technologies, AWS services, components), asks the architect what to add/change, and iterates
-  until the human SIGNS OFF. Consults official AWS docs before service choices. Sign-off produces
-  docs/features/<slug>/architecture.md. Trigger: "design architecture", "start architecture",
-  "architect design <slug>".
+  Use when a signed-off requirement needs an AWS solution designed. Runs the interactive, repo-local
+  architecture interview with the human architect until they sign off (producing architecture.md).
+  Trigger: "design architecture", "start architecture", "architect design <slug>".
 ---
 
 # architect-design
