@@ -28,7 +28,9 @@ docs/features/<slug>/architecture.md
       │   ── HUMAN GATE: sign-off → create Jira Stories + Sub-tasks · publish to Confluence
       ▼
 docs/features/<slug>/tech-design.md + code tickets (To Do)
-      │  DEVELOPER role (NON-interactive)
+      │  DEVELOPER role (NON-interactive, single dev, SERIAL)
+      │   ── one ticket at a time; next ticket starts only after the previous PR merges
+      │      (branch from fresh main) → no divergent branches, no merge conflicts
       │   ── consume one ticket → feature branch → implement → open PR
       │   ── ticket To Do → In Progress → In Review; PR gated by Reviewer/QA (later roles)
       ▼
