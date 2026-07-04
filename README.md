@@ -38,6 +38,20 @@ Confluence "Product" folder            (humans write requirements)
         ▼
    infra/ + .github/workflows/     →  infrastructure ready
 
+   ── (in parallel with DevOps, also from requirement + architecture) ──
+        │  ④  TECH LEAD role   (works directly in the repo, interactive)
+        │      • checks if existing code structure already covers the need
+        │      • designs code structure/interfaces/data models; interviews the tech lead
+        │      • HUMAN GATE: tech lead signs off → creates Jira Stories + Sub-tasks
+        │      • publishes design to Confluence, linked to architecture/requirement
+        ▼
+   docs/features/<slug>/tech-design.md  +  code tickets (To Do)
+        │  ⑤  DEVELOPER role   (NON-interactive)
+        │      • consumes one code ticket → feature branch → implements → opens PR
+        │      • ticket moves To Do → In Progress → In Review; PR gated by Reviewer/QA
+        ▼
+   apps/<module>/ code via PR per ticket
+
    A NEW FEATURE re-enters the pipeline; each role computes a DELTA vs existing artifacts.
 ```
 
@@ -99,5 +113,7 @@ template from `docs/templates/requirement-template.md`. See `config/README.md` f
   `architect-signoff-to-md`) + architecture template
 - ✅ **DevOps** role + skills (`devops-assess`, `devops-design`, `devops-signoff-to-md`)
   + devops template (Terraform + GitHub Actions)
+- ✅ **Tech Lead** role + skills (`tech-lead-assess`, `tech-lead-design`, `tech-lead-signoff`)
+  + tech-design template (code structure + Story/Sub-task breakdown → Jira tickets)
 - ⏳ Atlassian space/project (awaiting permission) — everything runs config-guarded until then
-- 🔜 Developer, then QA / Reviewer / Release / Maintenance / Docs
+- 🔜 **Developer** (non-interactive, feature-branch PRs), then QA / Reviewer / Release / Maintenance / Docs

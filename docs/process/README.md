@@ -20,6 +20,20 @@ docs/features/<slug>/architecture.md
       ▼
 infra/ + .github/workflows/   →  infrastructure ready
 
+(In parallel with DevOps, also from requirement + architecture:)
+docs/features/<slug>/architecture.md
+      │  TECH LEAD role (repo-local, interactive)
+      │   ── coverage check (does existing code structure cover it?)
+      │   ── code structure/interfaces/data models · interview tech lead
+      │   ── HUMAN GATE: sign-off → create Jira Stories + Sub-tasks · publish to Confluence
+      ▼
+docs/features/<slug>/tech-design.md + code tickets (To Do)
+      │  DEVELOPER role (NON-interactive)
+      │   ── consume one ticket → feature branch → implement → open PR
+      │   ── ticket To Do → In Progress → In Review; PR gated by Reviewer/QA (later roles)
+      ▼
+apps/<module>/ code via PR per ticket
+
 New feature → re-enters the pipeline; each role computes a DELTA against existing artifacts.
 ```
 
@@ -31,5 +45,7 @@ New feature → re-enters the pipeline; each role computes a DELTA against exist
   without a Jira ticket moved To Do → In Progress → In Review/Testing → Done. Enforced by the
   `jira-gate` skill.
 - **Per-feature artifacts.** Never overwrite another feature's files; one folder per feature.
-- **Human gates.** Sign-off (Product), agreement (Architect), deploy-rule approval (DevOps).
+- **Human gates.** Sign-off (Product), agreement (Architect), deploy-rule approval (DevOps),
+  design + ticket-breakdown sign-off (Tech Lead). The Developer is non-interactive — its PR is
+  gated at merge by the Reviewer/QA roles rather than at authoring time.
 - **Author/review separation.** The authoring pass and the review/verification pass are distinct.

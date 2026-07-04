@@ -7,7 +7,8 @@
     "spaceId": "TBD",
     "productPageId": "TBD",
     "architecturePageId": "TBD",
-    "devopsPageId": "TBD"
+    "devopsPageId": "TBD",
+    "techDesignPageId": "TBD"
   },
   "jira": {
     "projectKey": "TBD",
