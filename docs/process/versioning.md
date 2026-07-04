@@ -36,14 +36,18 @@ A version is **not** the Developer's decision. It is cut on **Story completion**
 ```
 Story's last Sub-task merged (reviewed)
    │  RELEASE MANAGER cuts a release candidate:  vX.Y.0-rc.1   (tag on main)
-   │     → deploy workflow ships it to the TEST/STAGING environment
+   │     → deploy workflow ships it to the TEST environment
    ▼
 QA tests vX.Y.0-rc.N against the Story's acceptance criteria
    │  issues found → Bug tickets → Developer fixes → merged → RELEASE MANAGER cuts rc.(N+1)
    │  QA passes    → RELEASE MANAGER promotes → vX.Y.0 (drop -rc suffix)
    ▼
-vX.Y.0 released → deploy workflow ships to PRODUCTION per DevOps rules
+vX.Y.0 released → deploy workflow promotes through STAGE → PROD
+                   (prod behind manual approval, per DevOps rules)
 ```
+
+Environments (`test`, `stage`, `prod`) and the promotion path are enforced by
+`docs/standards/devops-standards.md`.
 
 ## Ownership (who does what)
 

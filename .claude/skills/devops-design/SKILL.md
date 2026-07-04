@@ -25,13 +25,17 @@ decides; you revise; repeat until sign-off. No infra is generated until sign-off
    the `devops-assess` coverage decision.
 2. Draft/extend `docs/features/<slug>/devops.draft.md` from `docs/templates/devops-template.md`
    (Status `Draft`).
-3. **Interview the engineer** on the decisions that need a human:
-   - **Environments** (dev/staging/prod) and the target **AWS account(s)** per environment;
-   - **Deploy rules** — what triggers deploys, required approvals/reviewers, promotion path,
-     rollback strategy, change windows;
+3. **Interview the engineer** on the specifics (the platform/env set/auth are FIXED by
+   `docs/standards/devops-standards.md` — enforce them):
+   - **AWS account + region** for each of the three mandatory environments **test / stage / prod**;
+   - **Deploy rules** — triggers, required approvals/reviewers (**prod requires manual approval**),
+     promotion path (`test → stage → prod`), rollback strategy, change windows;
    - **GitHub Actions steps** — CI (lint/test/build), `terraform plan` on PR, `terraform apply`
      on merge/tag with environment protection, deploy/smoke-test jobs;
-   - **State backend** (S3 + DynamoDB) and **secrets** approach (prefer GitHub OIDC → AWS IAM).
+   - **GitHub Environments** — the `test`/`stage`/`prod` environments and their scoped
+     **variables + secrets** (values set by the human in GitHub, never in the repo);
+   - **State backend** (S3 + DynamoDB, per-env keys) and **auth via GitHub OIDC → AWS IAM role per
+     env** (no long-lived keys).
 4. Map each architecture component to Terraform resources/modules; propose the `infra/` module
    layout and workflow set. Ground non-trivial choices in official docs (AWS skills + AWS docs MCP,
    Terraform/GitHub Actions docs).

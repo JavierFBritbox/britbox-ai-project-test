@@ -27,9 +27,11 @@ agreed architecture; your outputs — created only on the engineer's **sign-off*
 2. **Coverage check first** — does the existing `infra/` + `.github/workflows/` already cover this
    requirement/architecture? Fully covered → no change; partial → design the delta; not covered →
    new setup.
-3. **Interview the human DevOps engineer**: environments (dev/staging/prod), target **AWS
-   account(s)** per env, **deploy rules** (triggers, approvals, promotion path, rollback), and
-   **GitHub Actions steps**. Iterate until they are satisfied.
+3. **Interview the human DevOps engineer**: the target **AWS account** for each of the three
+   mandatory environments (**test / stage / prod**), **deploy rules** (triggers, approvals,
+   promotion path, rollback), and **GitHub Actions steps**. The environment set, platform, and auth
+   model are **fixed by `docs/standards/devops-standards.md`** — the interview fills in the
+   specifics (accounts, regions, approvers), not whether to follow the standard.
 4. **Human sign-off gate** — generate infra/workflows only after the engineer signs off. Never
    self-agree.
 5. **Publish on sign-off** — write `devops.md`, emit `infra/` + `.github/workflows/`, and publish
@@ -43,16 +45,39 @@ Generating/committing infra, workflows, or `devops.md` is a mutation → track v
 after commit. Read `config/atlassian.json` first; if Jira is `unconfigured`/`TBD`, proceed locally
 and flag the pending ticket (don't call Jira with placeholder IDs).
 
-## Standards
+## Standards (ENFORCED — see `docs/standards/devops-standards.md`)
 
-- Cloud **AWS**; IaC **Terraform**; CI/CD **GitHub Actions**.
-- Prefer **GitHub OIDC → AWS IAM role assumption**; never commit long-lived AWS keys or secrets.
-  Secrets go in GitHub environments/vars, referenced by workflows.
-- Remote Terraform **state backend** (S3 + DynamoDB lock), per-environment keys.
+These are mandatory; a setup that violates any of them is not "Agreed":
+
+- **CI/CD = GitHub Actions only.** **Infrastructure = AWS only, via Terraform only.**
+- **Environments, secrets, and variables are defined in GitHub** (GitHub Environments, env-scoped),
+  consumed by workflows — **never** committed to the repo/Terraform/code.
+- **Auth = GitHub OIDC → AWS IAM role per environment. No long-lived AWS keys anywhere.**
+- **Three mandatory environments — `test`, `stage`, `prod`** — each with its own AWS account, GitHub
+  Environment (with protection rules), OIDC role, and Terraform state key. **Prod requires manual
+  approval.** Promotion path is always `test → stage → prod`.
+- Remote Terraform **state** (S3 + DynamoDB lock), per-env keys; every resource tagged + traceable to
+  an architecture component.
 - Consult official docs before non-trivial choices — AWS skills (`aws-core`, `aws-serverless`,
   `aws-containers`, `aws-observability`, …), the AWS documentation MCP, and Terraform/GitHub Actions
   docs. Don't invent resource/attribute names.
-- Map every Terraform resource back to an architecture component for traceability.
+
+## Permission boundaries (never self-escalate)
+
+- **OIDC role is a human prerequisite.** The AWS account usually already has the OIDC trust/identity
+  provider; a **human DevOps engineer** must create the **OIDC IAM role** per environment — the AI
+  cannot. Verify the OIDC role exists before deploying; if missing, **stop and request the human
+  DevOps engineer** to set it up. Once OIDC exists, create anything **within its granted permissions**.
+- **New permissions → Platform Engineering (human).** If infra needs IAM permissions/capabilities the
+  OIDC role lacks, **request the Platform Engineering human team** (state what + why) and **block
+  until granted**. Never widen your own role or work around a missing permission.
+
+## Monitor & maintain the pipeline
+
+DevOps owns the CI/CD after authoring it. Use `devops-monitor` to **watch GitHub Actions runs**
+(`gh run list/view/watch`), diagnose failures (build/test/plan/apply/deploy), and fix pipeline issues
+(workflow/Terraform corrections through the normal gated flow, or escalate to Platform Engineering if
+it's a permissions gap). Keep `main` deployable and the pipeline green.
 
 ## On new features (re-entry / delta)
 
@@ -66,6 +91,8 @@ changes, what is reused, what is migrated/decommissioned. Never clobber unrelate
    `docs/templates/devops-template.md`; defines envs, AWS accounts, deploy rules, Actions steps.
 3. **Sign-off → generate → publish** — `devops-signoff-to-md`: on sign-off, emit Terraform +
    workflows, finalize `devops.md`, update `INDEX.md`, publish to Confluence.
+4. **Monitor & fix** — `devops-monitor`: watch GitHub Actions runs, diagnose failures, and resolve
+   pipeline issues; keep the pipeline green.
 
 Keep authoring and review as separate passes; verify (`terraform validate`/`plan`, workflow lint)
 before claiming completion.

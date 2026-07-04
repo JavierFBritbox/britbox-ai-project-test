@@ -29,6 +29,7 @@ the user** with the precise remediation, then wait. Do not proceed, fake, or gue
 | `git` | `command -v git` | install git |
 | GitHub CLI `gh` | `command -v gh` && `gh auth status` | install `gh` and run `gh auth login` |
 | AWS CLI | `command -v aws` && `aws sts get-caller-identity` | install AWS CLI and configure credentials (`aws configure` / SSO) |
+| AWS **OIDC role** (DevOps deploys) | the per-env OIDC IAM role exists / is assumable | **request a human DevOps engineer** to set up the OIDC role — the AI must not create it. Missing IAM permissions → request **Platform Engineering** |
 | Terraform | `command -v terraform` && `terraform version` | install Terraform |
 | Language runtimes | `node -v` / `python --version` / etc. per module | install the module's runtime + package manager |
 | Atlassian | `config/atlassian.json` status ≠ `unconfigured`, no `TBD` | run `project-init` (creates/records Confluence + Jira) |

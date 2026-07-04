@@ -8,7 +8,7 @@ with a human counterpart and only advance the pipeline at explicit gates.
 |---|---|---|---|---|
 | **Product** | `product` | Requirement lifecycle in Confluence; review & sign-off | Human marks doc "Signed Off" | `docs/features/<slug>/requirement.md` |
 | **Architect** | `architect` | Decide if architecture is needed; design AWS solution | Human architect agreement | `docs/features/<slug>/architecture.md` |
-| **DevOps** | `devops` | Terraform + GitHub Actions from requirement + architecture (repo-local, interactive) | Human agrees deploy rules/envs/account | `infra/`, `.github/workflows/`, `docs/features/<slug>/devops.md` |
+| **DevOps** | `devops` | Terraform + GitHub Actions (enforced: AWS/TF/GHA, test/stage/prod, OIDC); monitors & fixes CI/CD (repo-local, interactive) | Human agrees deploy rules/envs/account | `infra/`, `.github/workflows/`, `docs/features/<slug>/devops.md` |
 | **Tech Lead** | `tech-lead` | Translate requirement+architecture into code design; break work into code tickets (repo-local, interactive) | Human tech lead signs off design + breakdown | `docs/features/<slug>/tech-design.md` + Jira Stories/Sub-tasks |
 | **Developer** | `developer` | Consume one code ticket → implement (clean/secure/efficient + unit tests) → open PR (**non-interactive**) | Reviewer approves the PR merge | `apps/<module>/` code + PR per ticket |
 | **Code Reviewer** | `code-reviewer` | Independent review of each Sub-task PR vs coding standards; approve → squash-merge | — (is the gate) | PR approval / change requests |
@@ -20,7 +20,8 @@ with a human counterpart and only advance the pipeline at explicit gates.
 The full role roster is complete. Further roles can be added here if new needs emerge.
 
 The Developer, Code Reviewer, and QA hold code to `docs/standards/coding-standards.md`.
-Versioning/branching is defined in `docs/process/versioning.md`.
+DevOps is bound by `docs/standards/devops-standards.md` (enforced platform, environments, OIDC,
+permission boundaries). Versioning/branching is defined in `docs/process/versioning.md`.
 
 ## Interactivity
 
