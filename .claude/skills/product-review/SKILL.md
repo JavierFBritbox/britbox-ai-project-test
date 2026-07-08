@@ -41,6 +41,28 @@ Humans answer comments (Open Questions table / inline replies) and update the do
 on explicit request, via the Product role). Re-run this skill until no open questions remain, then
 the human sets Status to "Signed Off" (handled by `product-signoff-to-md`).
 
+## Known limitation — comments cannot be cleared by the AI
+
+The Atlassian Rovo MCP exposes only comment **create** operations (`createConfluenceInlineComment`,
+`createConfluenceFooterComment`, and replies). There is **no tool to resolve or delete a Confluence
+comment**. Consequences the loop must account for:
+
+- **Comments are write-once and accumulate.** Inline comments do **not** auto-resolve. If a later
+  revision removes or rewrites the anchored text, the comment stays listed as **open** (not even
+  auto-marked `dangling`), so every review round leaves residue that only a human can clear in the
+  Confluence UI (open comment → Resolve, or ⋯ → Delete).
+- **Prefer fewer, higher-value inline comments + one footer summary.** Since they can't be tidied,
+  don't over-anchor. Anchor only to text likely to survive edits; put broad/structural feedback in
+  the footer summary rather than many inline notes.
+- **Before a re-review, don't re-post superseded points.** Read existing open comments first
+  (already required in Steps) and skip anything the new revision has addressed — you cannot retract
+  a now-stale comment, so avoid creating it again.
+- **On a major reframe/rewrite, warn the human.** Rewriting a page orphans its inline comments
+  (their anchor text is gone) but leaves them listed as open. Flag which comment IDs are now stale
+  and tell the human they must be resolved/deleted in the Confluence UI — the AI cannot do it.
+- **Do not "tidy" by replying.** Adding "superseded" replies increases clutter instead of removing
+  it; it is not a substitute for UI resolution.
+
 ## Guard & gate
 
 Configuration guard as above. Track a review pass with `jira-gate` (Story/Task) if it changes

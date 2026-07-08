@@ -1,33 +1,43 @@
 {
-  "status": "unconfigured",
+  "status": "configured",
   "cloudId": "5f44c581-ad3b-4818-8ebc-5999ba283710",
   "site": "britbox.atlassian.net",
   "confluence": {
-    "spaceKey": "TBD",
-    "spaceId": "TBD",
-    "productPageId": "TBD",
-    "architecturePageId": "TBD",
-    "devopsPageId": "TBD",
-    "techDesignPageId": "TBD",
-    "docsPageId": "TBD"
+    "spaceKey": "JSX",
+    "spaceId": "1871839239",
+    "productPageId": "1876590599",
+    "requirementTemplatePageId": "1874427911",
+    "architecturePageId": "1874657286",
+    "devopsPageId": "1874460686",
+    "techDesignPageId": "1876328453",
+    "docsPageId": "1875214339"
   },
   "jira": {
-    "projectKey": "TBD",
-    "projectId": "TBD",
+    "projectKey": "JSBX",
+    "projectId": "10949",
     "issueTypes": {
-      "epic": "TBD",
-      "story": "TBD",
-      "task": "TBD",
-      "bug": "TBD",
-      "subtask": "TBD"
+      "epic": "10000",
+      "story": "10007",
+      "task": "10044",
+      "bug": "10046",
+      "subtask": "10045"
     },
     "transitions": {
-      "toDo": "TBD",
-      "inProgress": "TBD",
-      "inReview": "TBD",
-      "testing": "TBD",
-      "done": "TBD",
-      "blocked": "TBD"
-    }
+      "toDo": "11",
+      "inProgress": "31",
+      "inReview": "2",
+      "testing": "3",
+      "done": "7",
+      "blocked": "6"
+    },
+    "statusNames": {
+      "toDo": "Backlog",
+      "inProgress": "In Progress",
+      "inReview": "In Review",
+      "testing": "In Testing Staging",
+      "done": "Done",
+      "blocked": "Blocked"
+    },
+    "_notes": "Workflow (updated 2026-07-07, second revision) is now STRICTLY LINEAR: Backlog -> (Selected for Development) -> In Progress -> In Review -> In Testing Staging -> Done, plus a Blocked side-status. IMPORTANT: transition IDs are edge-specific (per source status), NOT global for the pipeline stages, and the workflow is being actively edited, so IDs drift. Globals (work from any status): Backlog(11), Selected for Development(21), In Progress(31). Source-specific edges observed: inReview=2 (In Progress->In Review); testing=3 (In Review->In Testing Staging, status 11919); done=7 (In Testing Staging->Done, status 10056) -- NOTE done is NO LONGER 41 and is NOT reachable from In Progress or In Review; Done is only reachable from Testing. Block is source-specific: 6 (from In Progress), 5 (from In Review), 4 (from Testing), target status 11296. STRONG RECOMMENDATION: every role should resolve the transition ID dynamically via getTransitionsForJiraIssue and match the TARGET STATUS NAME (In Review / In Testing Staging / Done / Blocked) rather than trusting these stored IDs, and to reach Done must walk In Progress -> In Review -> Testing -> Done."
   }
 }

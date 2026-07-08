@@ -1,120 +1,149 @@
 <!--
   REQUIREMENT DOCUMENT TEMPLATE
   ----------------------------------------------------------------------------
-  Product team: fill in every section below. The Product AI role will read this
-  document, add inline comments/questions where anything is unclear, incomplete,
-  or ambiguous, and iterate with you until it is ready.
+  This document is a STORY told from the PRODUCT point of view: it explains what
+  we want to achieve and why, clearly enough that anyone can read it top to bottom
+  and understand the goal.
 
-  When you (a human) are satisfied and all comments are resolved, set the Status
-  to "Signed Off". The Product role will then convert this into
-  docs/features/<feature-slug>/requirement.md in the repository and hand it to
-  the Architect role.
+  IT IS THE AI's INPUT FOR THE NEXT STEPS. The Architect, Tech Lead and Developer
+  roles (AI) consume this to design and build the feature. But you only need to
+  provide what PRODUCT can provide: the intent, the outcomes, and pointers to any
+  relevant material. You do NOT need to define APIs, schemas, contracts, data
+  models or system designs — those are worked out in the ARCHITECTURE phase. If you
+  know a relevant spec, system, prototype or doc, just link it under "Background &
+  references" and the Architect will take it from there.
 
-  - Do not delete section headings; write "N/A" if a section genuinely doesn't apply.
+  HOW WE USE IT
+  - Write it as prose, not a form. Fill each section; write "N/A" only if a section
+    genuinely doesn't apply. Don't delete headings.
+  - Discussion belongs in COMMENTS, not in the body. Ask questions, challenge and
+    debate using Confluence inline/footer comments. When a comment is resolved, fold
+    the change into the relevant section and resolve the comment. Do NOT keep a
+    running "open questions" list — it makes the document variable and hard to read.
+    The body should always be a clean, current statement of intent.
+  - When it is agreed and all comments are resolved, set Status to "Signed Off".
+    The Product role converts it into docs/features/<slug>/requirement.md.
   - Guidance in HTML comments (like this) is for authors and is stripped on conversion.
 -->
 
 # Requirement: <Feature / System Name>
 
-## 1. Metadata
+## 1. At a glance
+
+<!-- Keep this small — just the facts needed to find and place the work. -->
 
 | Field | Value |
 |---|---|
-| Feature slug | `<kebab-case-slug>` <!-- used as the docs/features/<slug>/ folder name --> |
-| Author(s) | <name(s)> |
+| Feature slug | `<kebab-case-slug>` <!-- becomes the docs/features/<slug>/ folder name --> |
 | Product owner | <name> |
-| Created | <YYYY-MM-DD> |
-| Last updated | <YYYY-MM-DD> |
-| Status | `Draft` <!-- Draft → In Review → Changes Requested → Signed Off --> |
-| Jira epic | <KEY-123 or "to be created"> |
-| Confluence page | <link, auto-filled once published> |
+| Author(s) | <name(s)> |
+| Status | `Draft` <!-- Draft → In Review → Signed Off --> |
 | Priority | `<Must / Should / Could / Won't>` (MoSCoW) |
 | Target release | <milestone / date, or "TBD"> |
+| Links | <Jira epic, related docs, designs> |
 
-## 2. Summary
+## 2. The story — what we want to achieve, and why
 
-<!-- 2-4 sentences a non-expert can understand. What is this and why now? -->
+<!--
+  The heart of the document. In a few short paragraphs, tell the story:
+  - Where are we today, and what's the problem or opportunity?
+  - What do we want to be true instead?
+  - Why does this matter now?
+  Write it so a non-expert understands the goal. Prefer plain language over jargon.
+-->
 
-## 3. Background & Problem Statement
+## 3. Who it's for
 
-<!-- What is the current situation? What problem/pain are we solving? Include
-     evidence (metrics, user feedback, support tickets) where possible. -->
+<!-- The people this serves and what they are trying to do. One line each is fine. -->
 
-## 4. Goals
+- As a <role>, I want <capability>, so that <benefit>.
 
-<!-- What outcomes define success? Prefer measurable statements. -->
+## 4. What success looks like
+
+<!-- The outcomes that define success. Make them observable/measurable where you can. -->
+
 - 
 
-## 5. Non-Goals
+## 5. What we're not doing
 
-<!-- Explicitly what this work will NOT do. Prevents scope creep. -->
+<!-- Explicitly out of scope, and non-goals. Prevents scope creep and sets expectations. -->
+
 - 
 
-## 6. Users & Personas
+## 6. What it needs to do
 
-<!-- Who is affected? End users, internal teams, partners, systems. -->
-- 
+<!--
+  The capabilities we need, in plain product language — what the user should be able
+  to do, and why. One bullet per capability; tag priority inline: (Must)/(Should)/(Could).
+  Describe the WHAT and WHY, not the technical HOW — the architecture phase handles HOW.
+-->
 
-## 7. User Stories / Use Cases
+- **<capability>** — <what the user can do and why> _(Must)_
 
-<!-- One line each: "As a <role>, I want <capability>, so that <benefit>." -->
-- As a …, I want …, so that …
+## 7. Quality expectations
 
-## 8. Functional Requirements
+<!--
+  The qualities that matter, described the way Product experiences them
+  (e.g. "feels fast", "works in all our regions", "accessible", "handles our busy
+  periods", "keeps personal data safe"). Fill only what applies; "N/A" the rest.
+  Exact targets/SLAs can be firmed up with the Architect.
+-->
 
-<!-- Numbered, testable, unambiguous. Use "MUST / SHOULD / MAY". -->
-| # | Requirement | Priority |
-|---|---|---|
-| FR-1 |  | Must |
-
-## 9. Non-Functional Requirements
-
-<!-- Fill in the ones that apply; write N/A for the rest. -->
-| Aspect | Requirement |
+| Aspect | What matters here |
 |---|---|
-| Performance / latency |  |
-| Scalability / expected load |  |
-| Availability / SLA |  |
-| Security & privacy (PII, GDPR) |  |
+| Speed / responsiveness |  |
+| Reliability / availability |  |
+| Scale (busy periods) |  |
+| Privacy & security (personal data) |  |
 | Accessibility |  |
-| Localisation / regions |  |
-| Observability (logs, metrics, alerts) |  |
-| Compliance / contractual |  |
+| Languages / regions |  |
 
-## 10. Acceptance Criteria
+## 8. What it connects to
 
-<!-- Given/When/Then, or a checklist. These become the QA/verification basis. -->
+<!--
+  In plain terms, the other products, systems or data this relies on or affects — as
+  far as Product knows. You don't need technical detail or ownership; naming them and
+  linking anything useful (in "Background & references") is enough for the Architect.
+-->
+
+- 
+
+## 9. How we'll know it's done
+
+<!-- Acceptance criteria — the checks that prove success, in user terms.
+     Given/When/Then or a checklist. These become the QA/verification basis. -->
+
 - [ ] 
 
-## 11. Dependencies & Constraints
+## 10. Constraints & assumptions
 
-<!-- Upstream/downstream systems, third parties, deadlines, budget, tech constraints. -->
-- 
+<!-- Deadlines, budget, policy or business limits, and anything we're taking as true. -->
 
-## 12. Data & Integrations
-
-<!-- What data is read/written? Which internal/external systems are involved? -->
-- 
-
-## 13. Out of Scope
-
-- 
-
-## 14. Open Questions
-
-<!-- The Product AI role and reviewers add entries here; owner answers inline. -->
-| # | Question | Raised by | Answer | Status |
-|---|---|---|---|---|
-| Q-1 |  |  |  | Open |
-
-## 15. Risks & Assumptions
-
+- **Constraint:** 
 - **Assumption:** 
+
+## 11. Risks
+
+<!-- What could go wrong, and how likely/impactful. -->
+
 - **Risk:** 
 
-## 16. Sign-Off
+## 12. Background & references
 
-<!-- Set Status (section 1) to "Signed Off" only when this section is complete. -->
+<!--
+  Anything that helps the reader (and the AI Architect) understand or build this:
+  links to related docs, specs, prototypes, designs, tickets, or systems you know are
+  relevant. You don't have to explain them technically — just link and say in one line
+  what each is. This is how the requirement stays product-focused but still points the
+  architecture phase at the right material.
+-->
+
+- <link> — <what it is / why it's relevant>
+
+## 13. Sign-off
+
+<!-- Set Status (section 1) to "Signed Off" only when this is complete and comments are resolved. -->
+
 | Role | Name | Decision | Date |
 |---|---|---|---|
 | Product owner |  | ☐ Approved |  |
